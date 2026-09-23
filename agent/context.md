@@ -8,8 +8,14 @@ A self-evolving neural noise engine driven by Arabic phoneme acoustics, live cos
 
 - .gitignore  (179B)
 - README.md  (1390B)
-- agent/log.jsonl  (130B)
-- agent_orchestrator.py  (15317B)
+- agent/context.md  (37781B)
+- agent/explain.md  (263B)
+- agent/log.jsonl  (579B)
+- agent/nohup.log  (56B)
+- agent/plan.md  (260B)
+- agent/suggestions.md  (260B)
+- agent/tasks.md  (359B)
+- agent_orchestrator.py  (16655B)
 - arabic_noise_engine.py  (12589B)
 - autonomous_dev.py  (4560B)
 - cosmic_data.py  (3912B)
@@ -20,6 +26,7 @@ A self-evolving neural noise engine driven by Arabic phoneme acoustics, live cos
 - export.sh  (1171B)
 - extract_roots.py  (1644B)
 - import.sh  (628B)
+- keep_running.sh  (176B)
 - main  (0B)
 - patch_cosmic_engine.py  (2018B)
 - phoneme_grammar.py  (2614B)
@@ -39,13 +46,6 @@ A self-evolving neural noise engine driven by Arabic phoneme acoustics, live cos
 - proposals/proposal_20260924_005652.md  (3474B)
 - proposals/proposal_20260924_005854.md  (187B)
 - proposals/proposal_20260924_010100.md  (187B)
-- proposals/proposal_20260924_010302.md  (467B)
-- proposals/proposal_20260924_010545.md  (3604B)
-- proposals/proposal_20260924_010747.md  (187B)
-- proposals/proposal_20260924_010948.md  (467B)
-- proposals/proposal_20260924_011212.md  (3066B)
-- proposals/proposal_20260924_011427.md  (3457B)
-- proposals/proposal_20260924_011651.md  (2729B)
 
 ## Source Code
 
@@ -951,50 +951,50 @@ if __name__ == "__main__":
 ```json
 
 {
-  "session": "session_20260924_005046_dialogue.jsonl",
-  "turns": 577,
-  "decodes": 578,
-  "distinct_roots": 22,
+  "session": "session_20260924_013440_dialogue.jsonl",
+  "turns": 64,
+  "decodes": 64,
+  "distinct_roots": 19,
   "top_roots": [
     [
-      "مطر",
-      39
+      "ضدد",
+      17
     ],
     [
-      "قنط",
-      36
+      "زبد",
+      13
     ],
     [
-      "طرد",
-      36
+      "ذبب",
+      7
     ],
     [
-      "نطق",
-      34
+      "ردد",
+      3
     ],
     [
-      "طمن",
-      34
+      "درر",
+      3
     ],
     [
-      "ربط",
-      32
+      "برد",
+      3
     ],
     [
-      "رطب",
-      30
+      "ندد",
+      3
     ],
     [
-      "قطن",
-      29
+      "بدر",
+      2
     ],
     [
-      "طرق",
-      28
+      "برر",
+      2
     ],
     [
-      "بطر",
-      27
+      "جبب",
+      2
     ]
   ],
   "last_cosmic": {
@@ -1004,11 +1004,11 @@ if __name__ == "__main__":
     "bz": null
   },
   "last_5_roots": [
+    "برد",
     "ردد",
-    "قنط",
-    "بطن",
-    "قطط",
-    "قطن"
+    "ذبب",
+    "ضدد",
+    "ذبب"
   ]
 }
 
@@ -1017,6 +1017,7 @@ if __name__ == "__main__":
 ## Git State
 ```
 
+02ed98a Add AI orchestrator with rate-limit handling
 7cff461 Fix ط voicing classification, soften selection softmax
 290aced Dialogue v4.1: acoustic fingerprint decode, dynamic cosmic derivatives, spread similarity
 d2f6e84 Fix: None-safe cosmic semantics, dialogue history replay, gemini-3.6-flash, flush prints
@@ -1024,38 +1025,15 @@ d2f6e84 Fix: None-safe cosmic semantics, dialogue history replay, gemini-3.6-fla
 9bca5c3 Untrack runtime dirs (logs, cache, proposals) — covered by .gitignore
 cff7f82 Cosmic gen 3 trained
 2c60468 test push
-4462df4 Add cosmic data fetcher, driver, autonomous dev loop, tmux dashboard
 ---
-?? agent/
-?? agent_orchestrator.py
-?? run_orchestrator.sh
+M agent/log.jsonl
+ M agent_orchestrator.py
+?? agent/nohup.log
+?? keep_running.sh
 
 ```
 
 ## Recent AI Proposals
-
-### proposal_20260924_011651.md
-# Proposal 20260924_011651
-
-## Telemetry
-
-```json
-{
-  "recent_mutations": 0,
-  "recent_states": 0,
-  "avg_entropy": 0,
-  "distinct_roots": 0,
-  "sample_roots": []
-}
-```
-
-## AI Response
-
-To resolve the zero-mutation bottleneck (`recent_mutations: 0` in telemetry) caused by an overly strict entropy variance threshold, update `_study` in `arabic_noise_engine.py`. Increasing the entropy variance threshold from `< 0.01` to `< 0.12` allows the engine to properly detect audio stasis, triggering adaptive mutations and logging brain states to telemetry.
-
-```python
-    def _study(self, chunk, root):
-   
 
 ### proposal_20260924_011853.md
 # Proposal 20260924_011853
@@ -1110,6 +1088,37 @@ To resolve the zero-mutation bottleneck (`recent_mutations: 0` in telemetry) cau
     "\u062d\u062f\u062b",
     "\u062d\u0632\u0646",
     "\u062e\u0648\u0636"
+  ]
+}
+```
+
+## AI Response
+
+
+
+
+### proposal_20260924_012257.md
+# Proposal 20260924_012257
+
+## Telemetry
+
+```json
+{
+  "recent_mutations": 7,
+  "recent_states": 62,
+  "avg_entropy": 9.757830237322025,
+  "distinct_roots": 43,
+  "sample_roots": [
+    "\u0627\u0645\u0648",
+    "\u0628\u062f\u0648",
+    "\u0628\u0631\u0645",
+    "\u0628\u0633\u0644",
+    "\u0628\u0637\u0634",
+    "\u0628\u0644\u0648",
+    "\u062a\u0644\u0648",
+    "\u062b\u0628\u0637",
+    "\u062b\u0631\u0628",
+    "\u062c\u0631\u0641"
   ]
 }
 ```
