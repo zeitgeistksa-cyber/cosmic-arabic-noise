@@ -1,0 +1,258 @@
+#!/usr/bin/env python3
+"""
+Dialogue Engine
+===============
+Speaks to the universe by choosing Arabic roots whose phoneme-derived
+semantic vectors best match the current cosmic state.
+"""
+import sys, os, json, time, random
+import numpy as np
+from pathlib import Path
+from phoneme_table import root_to_log_triad, PHONEMES
+from phoneme_grammar import root_grammar, prosody
+from cosmic_semantics import cosmic_semantic_vector
+from root_semantics import root_semantic, precompute, cosine
+from cosmic_driver import CosmicDriver
+from universal_rhythm import universal_rhythm_lfo
+
+SR, CHUNK = 44100, 2048
+ENGINE_VERSION = "4.0-dialogue"
+
+TELEMETRY_DIR = Path("telemetry"); BRAIN_DIR = Path("brains")
+TELEMETRY_DIR.mkdir(exist_ok=True); BRAIN_DIR.mkdir(exist_ok=True)
+
+# ---------- Load roots ----------
+def load_roots():
+    txt = Path("arabic_db/roots.txt")
+    if txt.exists():
+        lines = [ln.strip() for ln in txt.read_text(encoding="utf-8").splitlines()]
+        valid = [r for r in lines if len(r) == 3 and all(c in PHONEMES for c in r)]
+        if valid:
+            print(f"[dialogue] loaded {len(valid)} roots", file=sys.stderr)
+            return valid
+    print("[dialogue] fallback demo roots", file=sys.stderr)
+    return ["ابت", "عرب", "كتب", "علم", "نور", "صوت", "كون", "روح"]
+
+# ---------- Spectrum decoder: what does the current output sound like? ----------
+def decode_letter(spectrum_peak_hz):
+    """Map a spectral peak to the closest Arabic letter by formant proximity."""
+    best = "ا"; best_d = 1e9
+    for c, (F1, F2, F3, CoG) in PHONEMES.items():
+        d = abs(spectrum_peak_hz - F3 * 1000)
+        if d < best_d:
+            best_d = d; best = c
+    return best
+
+def decode_output(audio_chunk):
+    """Return the top-3 letters the current output sounds like."""
+    mono = audio_chunk[:, 0].astype(np.float32)
+    spec = np.abs(np.fft.rfft(mono))
+    freqs = np.fft.rfftfreq(len(mono), 1/SR)
+    # Top 3 spectral peaks
+    idx = np.argsort(spec)[-20:]
+    peaks = freqs[idx]
+    letters = [decode_letter(f) for f in peaks]
+    # Deduplicate preserving order
+    seen = set(); out = []
+    for l in letters:
+        if l not in seen:
+            seen.add(l); out.append(l)
+        if len(out) == 3:
+            break
+    return "".join(out) if out else "???"
+
+# ---------- Dialogue engine ----------
+class DialogueEngine:
+    def __init__(self, sr=SR):
+        self.sr = sr
+        self.sample_clock = 0
+        self.chunk_counter = 0
+        self.turn_counter = 0
+        self.session_start = time.time()
+
+        self.logger_path = TELEMETRY_DIR / (
+            f"session_{time.strftime('%Y%m%d_%H%M%S')}_dialogue.jsonl")
+        self.logger_fp = open(self.logger_path, "a")
+
+        # Physics
+        self.chaos_state = np.array([0.1, 0.0, 0.1, 0.5], dtype=np.float64)
+        self.phases = np.random.uniform(0, 2 * np.pi, 8)
+        self.native_freqs = np.array([27.5, 55.0, 110.0, 220.0,
+                                      440.0, 880.0, 1760.0, 3520.0])
+        self.coupling_k = 0.5
+
+        # Neural
+        self.in_dim = 16
+        self.hidden_dim = 32
+        self.W1 = np.random.uniform(-0.1, 0.1, (self.in_dim, self.hidden_dim))
+        self.W2 = np.random.uniform(-0.2, 0.2, (self.hidden_dim, self.hidden_dim))
+        self.W_out = np.random.uniform(-0.2, 0.2, (self.hidden_dim, 2))
+        self.theory_weights = np.array([0.25, 0.25, 0.25, 0.25])
+        self.omega_0 = 45.0
+
+        # Semantic layer
+        self.roots = load_roots()
+        self.root_vectors = precompute(self.roots)
+        self.root_list = list(self.root_vectors.keys())
+        self.cosmic = CosmicDriver(poll_interval=15)
+
+        # Dialogue state
+        self.current_root = random.choice(self.root_list)
+        self.current_triad = root_to_log_triad(self.current_root)
+        self.turn_chunks = 100                 # ~4.6 s per turn
+        self.turn_start_chunk = 0
+        self.turn_history = []
+
+        self.log({"type": "session_start", "engine": ENGINE_VERSION,
+                  "roots": len(self.roots)})
+
+    def log(self, r):
+        r["ts"] = time.time()
+        r["chunk"] = self.chunk_counter
+        self.logger_fp.write(json.dumps(r, ensure_ascii=False) + "\n")
+        self.logger_fp.flush()
+
+    def _step_physics(self, dt=0.0005):
+        x, y, z, w = self.chaos_state
+        dx = 10.0*(y-x)+w; dy = x*(28.0-z)-y
+        dz = x*y-(8.0/3.0)*z; dw = -0.5*x-0.1*w
+        self.chaos_state += np.array([dx, dy, dz, dw])*dt
+        pd = self.phases[:, None] - self.phases[None, :]
+        inter = np.sum(np.sin(pd), axis=1)
+        dp = 2*np.pi*self.native_freqs + (self.coupling_k/8)*inter
+        self.phases = np.mod(self.phases + dp*(CHUNK/self.sr), 2*np.pi)
+
+    def _new_turn(self, chunk):
+        """Called at the start of each dialogue turn."""
+        # 1) Listen to the universe
+        cosmic_vec, raw_state = cosmic_semantic_vector(self.cosmic)
+
+        # 2) Find the root whose semantics best match
+        scored = [(cosine(cosmic_vec, self.root_vectors[r]), r)
+                  for r in self.root_list]
+        scored.sort(reverse=True)
+        # Sample probabilistically from the top 20 to add variety
+        top = scored[:20]
+        weights = np.array([s for s, _ in top]) ** 3
+        weights /= weights.sum()
+        idx = np.random.choice(len(top), p=weights)
+        sim, chosen = top[idx]
+
+        self.current_root = chosen
+        self.current_triad = root_to_log_triad(chosen)
+
+        # 3) Grammar & prosody
+        grammar = root_grammar(chosen)
+        pros = prosody(chosen)
+
+        self.turn_counter += 1
+        self.turn_start_chunk = chunk
+
+        entry = {
+            "type": "turn",
+            "turn": self.turn_counter,
+            "root": chosen,
+            "triad": list(self.current_triad) if self.current_triad else None,
+            "similarity": float(sim),
+            "prosody": pros,
+            "cosmic_vec": [float(x) for x in cosmic_vec],
+            "cosmic_raw": {k: raw_state.get(k) for k in
+                           ("schumann_score", "kp_value", "wind_speed", "bz")},
+        }
+        self.turn_history.append(entry)
+        self.log(entry)
+        print(f"\n[turn {self.turn_counter}] universe={cosmic_vec[:3]}  "
+              f"-> root={chosen}  (sim={sim:.3f})  "
+              f"prosody={pros['weights']}", file=sys.stderr)
+
+    def _phoneme_latent(self, cs, t):
+        """Build the 4-dim latent from the current root's triad, shaped by prosody."""
+        if self.current_triad is None:
+            return np.zeros((cs, 4))
+        f1, f2, f3 = self.current_triad
+        p = prosody(self.current_root)
+        # Weight each letter channel by its prosodic weight
+        w1, w2, w3 = [x / 3.0 for x in p["weights"]]
+        rhythm = 0.7 + 0.3 * universal_rhythm_lfo(t)
+        e1 = np.sin(2*np.pi*f1*t) * w1 * rhythm
+        e2 = np.sin(2*np.pi*f2*t) * w2 * rhythm
+        e3 = np.sin(2*np.pi*f3*t) * w3 * rhythm
+        gm = np.cbrt(np.abs(e1*e2*e3) + 1e-9) * np.sign(e1*e2*e3)
+        return np.stack([e1, e2, e3, gm], axis=-1)
+
+    def generate_chunk(self, cs):
+        self._step_physics()
+
+        # Advance turn when due
+        if self.chunk_counter - self.turn_start_chunk >= self.turn_chunks:
+            self._new_turn(self.chunk_counter)
+
+        t = (self.sample_clock + np.arange(cs)) / self.sr
+        self.sample_clock += cs
+        self.chunk_counter += 1
+
+        cx, cy, cz, cw = self.chaos_state
+        sub = np.sin(2*np.pi*(30.0+5.0*np.sin(0.1*t))*t)
+        fm  = np.sin(2*np.pi*140.0*t + 4.0*np.sin(2*np.pi*63.3*t))
+        sw  = np.sin(2*np.pi*(200.0+3000.0*(0.5+0.5*np.sin(0.05*t)))*t)
+        pn  = np.random.randn(cs)*(0.5+0.5*np.sin(0.3*t))
+
+        cosmic = np.stack([
+            np.sin(2*np.pi*0.05*t),
+            np.full(cs, cx/30.0), np.full(cs, cy/30.0), np.full(cs, cz/30.0),
+            np.full(cs, np.sin(self.phases[0])),
+            np.full(cs, np.sin(self.phases[2])),
+            np.full(cs, np.sin(self.phases[4])),
+            sub, fm, sw, pn,
+            np.cos(2*np.pi*7.83*t),
+        ], axis=-1)
+
+        arabic = self._phoneme_latent(cs, t)
+        latent = np.concatenate([cosmic, arabic], axis=-1)
+
+        h1 = np.sin(self.omega_0*(latent @ self.W1))
+        h2 = np.sin(self.omega_0*1.2*(h1 @ self.W2))
+        ar = np.tanh(h2 @ self.W_out)
+
+        mixed = (ar
+                 + sub[:, None]*self.theory_weights[0]
+                 + fm[:, None]*self.theory_weights[1]
+                 + sw[:, None]*self.theory_weights[2]
+                 + pn[:, None]*self.theory_weights[3]*0.3
+                 + arabic[:, :3].mean(axis=-1, keepdims=True)*0.4)
+
+        sat = np.tanh(np.sin(mixed*2.5)*3.0)
+        mv = np.max(np.abs(sat)) + 1e-9
+        fs = (sat/mv)*0.98
+
+        # Decode every 100 chunks -> what did we just say?
+        if self.chunk_counter % 100 == 0:
+            int16 = (np.clip(fs, -1.0, 1.0)*32767).astype(np.int16)
+            heard = decode_output(int16)
+            self.log({"type": "decode", "heard": heard,
+                      "intended_root": self.current_root})
+            print(f"[decode] intended={self.current_root}  "
+                  f"heard_as={heard}", file=sys.stderr)
+
+        return (np.clip(fs, -1.0, 1.0)*32767).astype(np.int16)
+
+    def shutdown(self):
+        self.log({"type": "session_end", "turns": self.turn_counter,
+                  "runtime_sec": time.time()-self.session_start})
+        self.logger_fp.close()
+
+def main():
+    e = DialogueEngine()
+    print(f"[dialogue {ENGINE_VERSION}] online :: "
+          f"roots={len(e.roots)} :: log={e.logger_path}", file=sys.stderr)
+    try:
+        while True:
+            sys.stdout.buffer.write(e.generate_chunk(CHUNK).tobytes())
+            sys.stdout.buffer.flush()
+    except (KeyboardInterrupt, BrokenPipeError):
+        pass
+    finally:
+        e.shutdown(); sys.exit(0)
+
+if __name__ == "__main__":
+    main()
