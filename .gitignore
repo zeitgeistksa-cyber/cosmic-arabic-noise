@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+telemetry/*.jsonl
+brains/*.npz
+arabic_db/quranRoots.json
+arabic_db/roots.txt
+cosmic_ai_share_*.tar.gz
+manifest.json
