@@ -28,9 +28,9 @@ def load_roots():
         lines = [ln.strip() for ln in txt.read_text(encoding="utf-8").splitlines()]
         valid = [r for r in lines if len(r) == 3 and all(c in PHONEMES for c in r)]
         if valid:
-            print(f"[dialogue] loaded {len(valid)} roots", file=sys.stderr)
+            print(f"[dialogue] loaded {len(valid)} roots", file=sys.stderr, flush=True)
             return valid
-    print("[dialogue] fallback demo roots", file=sys.stderr)
+    print("[dialogue] fallback demo roots", file=sys.stderr, flush=True)
     return ["ابت", "عرب", "كتب", "علم", "نور", "صوت", "كون", "روح"]
 
 # ---------- Spectrum decoder: what does the current output sound like? ----------
@@ -43,23 +43,64 @@ def decode_letter(spectrum_peak_hz):
             best_d = d; best = c
     return best
 
-def decode_output(audio_chunk):
-    """Return the top-3 letters the current output sounds like."""
+def acoustic_fingerprint(audio_chunk):
+    """Report what the sound IS (spectral properties), not what letters it resembles."""
     mono = audio_chunk[:, 0].astype(np.float32)
-    spec = np.abs(np.fft.rfft(mono))
+    spec = np.abs(np.fft.rfft(mono)) + 1e-9
     freqs = np.fft.rfftfreq(len(mono), 1/SR)
-    # Top 3 spectral peaks
-    idx = np.argsort(spec)[-20:]
-    peaks = freqs[idx]
-    letters = [decode_letter(f) for f in peaks]
-    # Deduplicate preserving order
-    seen = set(); out = []
-    for l in letters:
-        if l not in seen:
-            seen.add(l); out.append(l)
-        if len(out) == 3:
-            break
-    return "".join(out) if out else "???"
+    # Spectral centroid (Hz) -- where the "weight" of the sound sits
+    centroid = float(np.sum(freqs * spec) / np.sum(spec))
+    # Rolloff -- 85% of energy below this frequency
+    cum = np.cumsum(spec) / np.sum(spec)
+    rolloff = float(freqs[np.searchsorted(cum, 0.85)])
+    # Roughness -- variance of the short-time envelope (0-1)
+    env = np.abs(mono)
+    rough = float(np.std(env) / (np.mean(env) + 1e-9))
+    # Band label from centroid
+    if centroid < 400:   band = "SUB"
+    elif centroid < 1500: band = "LOW"
+    elif centroid < 4000: band = "MID"
+    elif centroid < 8000: band = "HIGH"
+    else:                 band = "AIR"
+    return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
+
+# Keep old name for compatibility
+def acoustic_fingerprint(audio_chunk):
+    """Report what the sound IS: band, centroid, rolloff, roughness."""
+    mono = audio_chunk[:, 0].astype(np.float32)
+    spec = np.abs(np.fft.rfft(mono)) + 1e-9
+    freqs = np.fft.rfftfreq(len(mono), 1/SR)
+    centroid = float(np.sum(freqs * spec) / np.sum(spec))
+    cum = np.cumsum(spec) / np.sum(spec)
+    rolloff = float(freqs[np.searchsorted(cum, 0.85)])
+    env = np.abs(mono)
+    rough = float(np.std(env) / (np.mean(env) + 1e-9))
+    if centroid < 400:   band = "SUB"
+    elif centroid < 1500: band = "LOW"
+    elif centroid < 4000: band = "MID"
+    elif centroid < 8000: band = "HIGH"
+    else:                 band = "AIR"
+    return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
+
+def acoustic_fingerprint(audio_chunk):
+    """Report what the sound IS: band, centroid, rolloff, roughness."""
+    mono = audio_chunk[:, 0].astype(np.float32)
+    spec = np.abs(np.fft.rfft(mono)) + 1e-9
+    freqs = np.fft.rfftfreq(len(mono), 1/SR)
+    centroid = float(np.sum(freqs * spec) / np.sum(spec))
+    cum = np.cumsum(spec) / np.sum(spec)
+    rolloff = float(freqs[np.searchsorted(cum, 0.85)])
+    env = np.abs(mono)
+    rough = float(np.std(env) / (np.mean(env) + 1e-9))
+    if centroid < 400:   band = "SUB"
+    elif centroid < 1500: band = "LOW"
+    elif centroid < 4000: band = "MID"
+    elif centroid < 8000: band = "HIGH"
+    else:                 band = "AIR"
+    return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
+
+def decode_output(audio_chunk):
+    return acoustic_fingerprint(audio_chunk)
 
 # ---------- Dialogue engine ----------
 class DialogueEngine:
@@ -125,15 +166,20 @@ class DialogueEngine:
     def _new_turn(self, chunk):
         """Called at the start of each dialogue turn."""
         # 1) Listen to the universe
-        cosmic_vec, raw_state = cosmic_semantic_vector(self.cosmic)
+        cosmic_vec_full, raw_state = cosmic_semantic_vector(self.cosmic)
+        cosmic_vec = cosmic_vec_full[:8]  # compare only first 8 dims to root vectors
 
         # 2) Find the root whose semantics best match
         scored = [(cosine(cosmic_vec, self.root_vectors[r]), r)
                   for r in self.root_list]
         scored.sort(reverse=True)
-        # Sample probabilistically from the top 20 to add variety
-        top = scored[:20]
-        weights = np.array([s for s, _ in top]) ** 3
+        # 2b) Z-score the top to spread selection weights
+        top = scored[:40]
+        sims = np.array([s for s, _ in top])
+        mean_s, std_s = sims.mean(), sims.std() + 1e-9
+        z = (sims - mean_s) / std_s
+        # Convert z-scores to weights via softmax-like scaling
+        weights = np.exp(3.0 * z)
         weights /= weights.sum()
         idx = np.random.choice(len(top), p=weights)
         sim, chosen = top[idx]
@@ -244,7 +290,7 @@ class DialogueEngine:
 def main():
     e = DialogueEngine()
     print(f"[dialogue {ENGINE_VERSION}] online :: "
-          f"roots={len(e.roots)} :: log={e.logger_path}", file=sys.stderr)
+          f"roots={len(e.roots)} :: log={e.logger_path}", file=sys.stderr, flush=True)
     try:
         while True:
             sys.stdout.buffer.write(e.generate_chunk(CHUNK).tobytes())
