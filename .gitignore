@@ -6,5 +6,8 @@ telemetry/*.jsonl
 brains/*.npz
 arabic_db/quranRoots.json
 arabic_db/roots.txt
+cosmic_cache/
+logs/
+proposals/
 cosmic_ai_share_*.tar.gz
 manifest.json
