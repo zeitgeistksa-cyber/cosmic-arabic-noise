@@ -41,3 +41,9 @@ and the universal 2 Hz acoustic communication rhythm.
 
     ./export.sh                   # -> cosmic_ai_share_*.tar.gz
     ./import.sh <archive.tar.gz>  # -> merge into local pool
+
+## Live Viewer
+
+Watch the engine speak to the cosmos in real time:
+
+https://zeitgeistksa-cyber.github.io/cosmic-arabic-noise/
