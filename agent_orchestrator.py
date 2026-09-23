@@ -144,7 +144,7 @@ def proposals_digest():
 
 # ---------- Aichat caller ----------
 _last_call_ts = [0.0]
-_MIN_GAP_SEC = 8.0   # space requests out for free-tier rate limits
+_MIN_GAP_SEC = 2.5   # space requests out for free-tier rate limits
 
 def _is_rate_error(text):
     """Detect rate-limit / overload errors from any provider."""
