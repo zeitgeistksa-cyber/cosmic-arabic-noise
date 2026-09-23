@@ -21,7 +21,7 @@ MAKHRAJ = {
     "ف": 0.90, "ب": 0.95, "م": 0.95, "و": 0.98,
 }
 
-VOICED = set("ابتثجحخدذرزسشصضطظعغفقكلمنهوي") - set("تثحخسشصكفهء")
+VOICED = set("بج دذرزضظعغلمنوي".replace(" ", ""))
 EMPHATIC = set("صضطظ")
 
 # manner: 0 = stop, 1 = fricative, 0.5 = sonorant

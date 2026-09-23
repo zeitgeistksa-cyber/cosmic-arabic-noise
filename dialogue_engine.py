@@ -179,7 +179,7 @@ class DialogueEngine:
         mean_s, std_s = sims.mean(), sims.std() + 1e-9
         z = (sims - mean_s) / std_s
         # Convert z-scores to weights via softmax-like scaling
-        weights = np.exp(3.0 * z)
+        weights = np.exp(1.2 * z)   # soften: 3.0 was too sharp
         weights /= weights.sum()
         idx = np.random.choice(len(top), p=weights)
         sim, chosen = top[idx]
