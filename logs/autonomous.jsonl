@@ -1,0 +1,3 @@
+{"event": "start", "interval": 120, "ts": 1790198739.8231514, "time": "2026-09-24T00:25:39.823157"}
+{"event": "proposal", "iteration": 1, "path": "proposals/proposal_20260924_002539.md", "summary": {"recent_mutations": 11, "recent_states": 87, "avg_entropy": 9.715707249843188, "distinct_roots": 62, "sample_roots": ["اجر", "ادد", "امد", "بيت", "تبت", "تين", "ثقف", "ثقل", "ثمد", "جمح"]}, "ts": 1790198739.9335546, "time": "2026-09-24T00:25:39.933564"}
+{"event": "stop", "ts": 1790198814.8196564, "time": "2026-09-24T00:26:54.819666"}

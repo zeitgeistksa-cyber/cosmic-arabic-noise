@@ -6,6 +6,7 @@ import numpy as np
 from pathlib import Path
 from phoneme_table import PHONEMES, PHONEME_LETTERS, root_to_log_triad
 from universal_rhythm import universal_rhythm_lfo
+from cosmic_driver import CosmicDriver
 
 SR, CHUNK = 44100, 2048
 ENGINE_VERSION = "3.2"
@@ -99,6 +100,7 @@ class ArabicNoiseEngine:
         self.entropy_history = []
         self.omega_0 = 45.0
 
+        self.cosmic = CosmicDriver(poll_interval=60)
         self.roots = load_roots()
         self.current_root = random.choice(self.roots)
         self.root_period_chunks = int(SR * 2.5 / CHUNK)
@@ -224,7 +226,27 @@ class ArabicNoiseEngine:
         tn = pn[:, None]*self.theory_weights[3]*0.3
         ta = arabic[:, :3].mean(axis=-1, keepdims=True)*0.4*self.theory_weights[1]
         mixed = ar + (ts+tf+tw+tn+ta)
-        sat = np.tanh(np.sin(mixed*2.5)*3.0)
+        # ---- Cosmic modulation: live space data shapes the sound ----
+        cs = self.cosmic.poll()
+        mod = self.cosmic.modulation_factor()
+        chaos_boost = cs.get("chaos_boost", 0.0)
+        sub_boost = cs.get("sub_boost", 0.5)
+        # Boost wavefolding when Kp index is high (geomagnetic storm)
+        fold_gain = 2.5 * (1.0 + 0.8 * chaos_boost)
+        # Boost sub-band energy when solar wind is fast
+        mixed = mixed + 0.3 * sub_boost * sub[:, None]
+        sat = np.tanh(np.sin(mixed * fold_gain) * (3.0 * mod))
+
+        # Log cosmic state every 50 chunks
+        if self.chunk_counter % 50 == 0:
+            self.logger.log({
+                "type": "cosmic",
+                "chunk": self.chunk_counter,
+                "schumann_score": cs.get("schumann_score"),
+                "kp_value": cs.get("kp_value"),
+                "wind_speed": cs.get("wind_speed"),
+                "modulation": mod,
+            })
         self._study(sat, self.current_root)
         mv = np.max(np.abs(sat)) + 1e-9
         fs = (sat/mv)*0.98
