@@ -11,3 +11,4 @@ logs/
 proposals/
 cosmic_ai_share_*.tar.gz
 manifest.json
+.vercel
