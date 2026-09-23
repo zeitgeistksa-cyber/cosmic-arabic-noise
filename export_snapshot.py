@@ -4,7 +4,7 @@ import json, glob, os, time
 from collections import Counter
 from pathlib import Path
 
-OUT = Path("public/snapshot.json")
+OUT = Path("snapshot.json")
 OUT.parent.mkdir(exist_ok=True)
 
 def latest_dialogue():
