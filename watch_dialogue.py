@@ -6,28 +6,37 @@ if not files:
 latest = files[-1]
 print(f">> Following {latest}\n")
 print(f"{'turn':>4}  {'root':>4}  {'sim':>5}  {'prosody':>10}  "
-      f"{'schumann':>8}  {'kp':>4}  {'wind':>5}  heard")
-print("-" * 90)
-with open(latest) as fp:
+      f"{'schum':>5}  {'kp':>4}  {'wind':>5}  heard")
+print("-" * 80)
+def render(r):
+    t = r.get("type")
+    if t == "turn":
+        raw = r.get("cosmic_raw", {}) or {}
+        print(f"{r.get('turn',0):>4}  {r.get('root','?'):>4}  "
+              f"{r.get('similarity',0):5.3f}  "
+              f"{str((r.get('prosody') or {}).get('weights','')):>10}  "
+              f"{str(raw.get('schumann_score','?')):>5}  "
+              f"{str(raw.get('kp_value','?')):>4}  "
+              f"{str(raw.get('wind_speed','?')):>5}  ...")
+    elif t == "decode":
+        print(f"      >> decoded: intended={r.get('intended_root','?')}  "
+              f"heard_as={r.get('heard','?')}")
+with open(latest, encoding="utf-8") as fp:
+    lines = fp.readlines()
+for line in lines[-50:]:
+    line = line.strip()
+    if not line: continue
+    try: r = json.loads(line)
+    except: continue
+    render(r)
+with open(latest, encoding="utf-8") as fp:
     fp.seek(0, os.SEEK_END)
-    pending = {}
     while True:
         line = fp.readline()
-        if not line: time.sleep(0.1); continue
+        if not line:
+            time.sleep(0.1); continue
         line = line.strip()
         if not line: continue
         try: r = json.loads(line)
         except: continue
-        t = r.get("type")
-        if t == "turn":
-            pending[r["turn"]] = r
-            raw = r.get("cosmic_raw", {})
-            print(f"{r['turn']:>4}  {r['root']:>4}  {r['similarity']:5.3f}  "
-                  f"{str(r['prosody']['weights']):>10}  "
-                  f"{raw.get('schumann_score','?'):>8}  "
-                  f"{raw.get('kp_value','?'):>4}  "
-                  f"{raw.get('wind_speed','?'):>5}  ...")
-        elif t == "decode":
-            intended = r.get("intended_root", "?")
-            heard = r.get("heard", "?")
-            print(f"      >> decoded: intended={intended}  heard_as={heard}")
+        render(r)

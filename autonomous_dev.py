@@ -63,7 +63,7 @@ def telemetry_summary(path):
 
 def ask_ai(prompt, files=None):
     """Call aichat with the prompt and optional files."""
-    cmd = ["aichat", "-r", "%code%"]
+    cmd = ["aichat"]
     if files:
         for f in files:
             cmd.extend(["-f", f])

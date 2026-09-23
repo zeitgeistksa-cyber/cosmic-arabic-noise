@@ -163,7 +163,7 @@ class DialogueEngine:
         self.log(entry)
         print(f"\n[turn {self.turn_counter}] universe={cosmic_vec[:3]}  "
               f"-> root={chosen}  (sim={sim:.3f})  "
-              f"prosody={pros['weights']}", file=sys.stderr)
+              f"prosody={pros['weights']}", file=sys.stderr, flush=True)
 
     def _phoneme_latent(self, cs, t):
         """Build the 4-dim latent from the current root's triad, shaped by prosody."""
@@ -232,7 +232,7 @@ class DialogueEngine:
             self.log({"type": "decode", "heard": heard,
                       "intended_root": self.current_root})
             print(f"[decode] intended={self.current_root}  "
-                  f"heard_as={heard}", file=sys.stderr)
+                  f"heard_as={heard}", file=sys.stderr, flush=True)
 
         return (np.clip(fs, -1.0, 1.0)*32767).astype(np.int16)
 

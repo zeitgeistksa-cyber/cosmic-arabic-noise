@@ -22,10 +22,12 @@ def cosmic_semantic_vector(driver=None):
     if driver is None:
         driver = CosmicDriver(poll_interval=0)
     s = driver.poll()
-    sch = s.get("schumann_score", 50)
-    kp = s.get("kp_value", 2.0)
-    wind = s.get("wind_speed", 400)
-    bz = s.get("bz", 0.0)
+    def _safe(x, default):
+        return default if x is None else x
+    sch = _safe(s.get("schumann_score"), 50)
+    kp = _safe(s.get("kp_value"), 2.0)
+    wind = _safe(s.get("wind_speed"), 400)
+    bz = _safe(s.get("bz"), 0.0)
 
     intensity   = _norm(sch, 0, 100)
     coherence   = 1.0 - _norm(kp, 0, 9)                 # calm = coherent
