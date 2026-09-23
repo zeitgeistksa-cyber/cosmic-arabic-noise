@@ -1,0 +1,15 @@
+.git/
+node_modules/
+telemetry/
+brains/
+cosmic_cache/
+logs/
+proposals/
+agent/history/
+arabic_db/
+__pycache__/
+*.pyc
+*.jsonl
+*.npz
+*.tar.gz
+*.log
