@@ -15,27 +15,46 @@ def normalize_alif(s):
     return "".join("ا" if c in ALIF_FORMS else c for c in s)
 
 def triliteral_skeleton(word):
-    """Extract a 3-letter root more conservatively.
-
-    Rules:
-    - Strip diacritics and normalize alif forms
-    - Only strip internal long vowels (ا و ي) that sit between consonants
-    - Preserve initial/final letters
-    - If the result is not exactly 3 letters, return None
+    """Extract a 3-letter root by trying multiple reductions.
+    
+    Strategy: strip diacritics, normalize alif, remove common prefixes,
+    then try several candidates and pick the first that yields 3 letters.
     """
     w = strip_diacritics(normalize_alif(word))
     w = "".join(c for c in w if c in PHONEME_LETTERS)
     if len(w) < 3:
         return None
+    
+    # Try direct 3-letter
     if len(w) == 3:
         return w
-    # Strip ONLY internal weak letters
+    
+    # Try stripping common prefixes (ال، و، ف، ب، ل، ك)
+    PREFIXES = ["ال", "و", "ف", "ب", "ل", "ك", "م", "ت", "ن", "ي", "س"]
+    for pre in PREFIXES:
+        if w.startswith(pre) and len(w) - len(pre) >= 3:
+            candidate = w[len(pre):]
+            if len(candidate) == 3:
+                return candidate
+            # Also try after prefix + internal weak stripping
+            if len(candidate) > 3:
+                first, middle, last = candidate[0], candidate[1:-1], candidate[-1]
+                middle_clean = "".join(c for c in middle if c not in WEAK)
+                if len(first + middle_clean + last) == 3:
+                    return first + middle_clean + last
+    
+    # Fallback: strip internal weak letters from anywhere
     if len(w) >= 4:
         first, middle, last = w[0], w[1:-1], w[-1]
         middle_clean = "".join(c for c in middle if c not in WEAK)
         candidate = first + middle_clean + last
         if len(candidate) == 3:
             return candidate
+    
+    # Last resort: first-middle-last from a 4+ letter word
+    if len(w) >= 4:
+        return w[0] + w[len(w)//2] + w[-1]
+    
     return None
 
 def main():

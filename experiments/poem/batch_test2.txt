@@ -1,0 +1,7 @@
+  Imru' al-Qais — Mu'allaqa       n= 10  mean=0.4813  z=-2.454
+  Al-Mutanabbi                    n= 11  mean=0.5000  z=-0.984
+  Nizar Qabbani                   n=  1  mean=0.5250  z=+0.344
+  Mahmoud Darwish                 n=  7  mean=0.5104  z=-0.081
+
+  COMBINED  n=29  mean=0.4969  z=-2.023
+  ** Significant at p<0.05 **
