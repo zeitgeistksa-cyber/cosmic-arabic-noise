@@ -1,0 +1,40 @@
+>> 8000 synthetic English roots
+>> Cosmic vector: [0.5, 0.222, 0.333, 0.5]
+
+=== Top 15 English roots under same cosmic vector ===
+  fff  sim=0.7363
+  sff  sim=0.7316
+  fsf  sim=0.7316
+  ffs  sim=0.7316
+  vff  sim=0.7296
+  fvf  sim=0.7296
+  ffv  sim=0.7296
+  ssf  sim=0.7262
+  sfs  sim=0.7262
+  fss  sim=0.7262
+  vsf  sim=0.7251
+  vfs  sim=0.7251
+  svf  sim=0.7251
+  sfv  sim=0.7251
+  fvs  sim=0.7251
+
+=== Top 15 Arabic roots under same cosmic vector (for comparison) ===
+  صفف  sim=0.7279
+  زفف  sim=0.7228
+  صصف  sim=0.7187
+  خفف  sim=0.7160
+  حفف  sim=0.7141
+  عفف  sim=0.7139
+  سفه  sim=0.7125
+  خسف  sim=0.7123
+  سفع  sim=0.7102
+  فسح  sim=0.7101
+  سفح  sim=0.7101
+  افف  sim=0.7097
+  فسق  sim=0.7095
+  سقف  sim=0.7095
+  فظظ  sim=0.7095
+
+=== Letter class composition ===
+English top 10: ['fff', 'sff', 'fsf', 'ffs', 'vff', 'fvf', 'ffv', 'ssf', 'sfs', 'fss']
+Arabic  top 10: ['صفف', 'زفف', 'صصف', 'خفف', 'حفف', 'عفف', 'سفه', 'خسف', 'سفع', 'فسح']

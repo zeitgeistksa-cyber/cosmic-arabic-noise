@@ -1,0 +1,35 @@
+>> active_patched.wav  (171.5 s)
+
+>> Overall spectral stats:
+   centroid:      8826 Hz
+   rolloff:      17671 Hz
+   flatness:    0.6682  (0=tonal, 1=noise)
+
+>> ASCII spectrogram (top = high freq, bottom = low freq)
+   80 time slices  ×  23 freq bands
+
+   14081 Hz |                                                                                |
+    8992 Hz |                                                                                |
+    5742 Hz |                                                                                |
+    3667 Hz |                                                                                |
+    2342 Hz |                                                                                |
+    1495 Hz |                                                                                |
+     955 Hz |   . . .        . . . .      . . . . .    . . . .      . . .        . .  .      |
+     610 Hz |          .   .                                    .                            |
+     389 Hz |        .=   :                                 :  =         .:         :-       |
+     249 Hz |.                                    -     =          .      - -          -     |
+     159 Hz |  + *      +   + * =::= + + + * =::=   + +   =::=   +   + =:     + + *   := + + |
+     101 Hz |%     #-                                              @                         |
+      64 Hz |             .                                                                  |
+      41 Hz |                          .   .    . .                                          |
+      26 Hz | .. .     .           . .                          ..                           |
+      17 Hz |                                                                                |
+      11 Hz |              -                            :                       -      %   - |
+       7 Hz |                                               .          .        -      :   - |
+       4 Hz |                                                =                               |
+       3 Hz |                                                -  -                            |
+       1 Hz |                                                   +      .                     |
+       1 Hz |                   .                               =      .                     |
+       0 Hz |                   .                               -                   .        |
+         |________________________________________________________________________________|
+          time →

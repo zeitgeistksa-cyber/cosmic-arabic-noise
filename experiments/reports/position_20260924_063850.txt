@@ -1,0 +1,13 @@
+Source roots: 1583    Observed turns: 7197
+
+  letter   src_p1   obs_p1   enrich   src_p3   obs_p3   enrich
+       ض     1.39    17.92    12.90     1.96     0.00     0.00
+       ز     2.53    17.17     6.80     1.71     1.81     1.06
+       ذ     1.58     7.81     4.94     0.82     0.53     0.64
+       ص     3.92     6.45     1.65     1.26     0.00     0.00
+       ط     2.34     4.21     1.80     2.02     3.67     1.81
+       ج     4.04     2.26     0.56     1.90     0.56     0.29
+
+If enrichment > 1 → engine favors this letter more than source data
+If enrichment < 1 → engine avoids it
+If enrichment ≈ 1 → no position preference, just data

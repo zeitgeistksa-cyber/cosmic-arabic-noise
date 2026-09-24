@@ -1,0 +1,11 @@
+>> active_patched.wav  (171.5 s)
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/cosmic_arabic_noise/mfcc_analysis.py", line 70, in <module>
+    main(sys.argv[1] if len(sys.argv) > 1 else "active_patched.wav")
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/cosmic_arabic_noise/mfcc_analysis.py", line 47, in main
+    mfccs = compute_mfcc(audio, sr)
+  File "/data/data/com.termux/files/home/cosmic_arabic_noise/mfcc_analysis.py", line 40, in compute_mfcc
+    mfcc = np.fft.dct(log_mel, type=2, norm='ortho')[:n_mfcc]
+           ^^^^^^^^^^
+AttributeError: module 'numpy.fft' has no attribute 'dct'

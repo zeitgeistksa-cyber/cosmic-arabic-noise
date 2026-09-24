@@ -2,64 +2,19 @@
   "title": "Nizar Qabbani",
   "sequence": [
     {
-      "word": "جلست",
-      "root": "جست",
-      "line": 0
-    },
-    {
-      "word": "والخوف",
-      "root": "وخف",
-      "line": 1
-    },
-    {
-      "word": "بعينيها",
-      "root": "بنا",
-      "line": 2
-    },
-    {
-      "word": "تتأمل",
-      "root": "تمل",
-      "line": 3
-    },
-    {
-      "word": "فنجاني",
-      "root": "فاي",
-      "line": 4
-    },
-    {
-      "word": "المقلوب",
-      "root": "اقب",
-      "line": 5
-    },
-    {
       "word": "قالت",
       "root": "قلت",
-      "line": 6
+      "line": 0
     },
     {
       "word": "ولدي",
       "root": "لدي",
-      "line": 7
-    },
-    {
-      "word": "تحزن",
-      "root": "حزن",
-      "line": 8
-    },
-    {
-      "word": "فالحب",
-      "root": "فلب",
-      "line": 9
+      "line": 1
     },
     {
       "word": "عليك",
       "root": "علك",
-      "line": 10
-    },
-    {
-      "word": "المكتوب",
-      "root": "اكب",
-      "line": 11
+      "line": 2
     }
   ]
 }

@@ -1,0 +1,119 @@
+=== 8171 turns with full data ===
+
+=== 1. Cosmic ↔ phonetic correlations ===
+      cosmic        phonetic        r     |r|
+    schumann     voice_count   -0.128   0.128  #####
+    schumann      emph_count   +0.193   0.193  #######
+    schumann        c0_voice   -0.115   0.115  ####
+    schumann        c1_voice   -0.124   0.124  ####
+    schumann        c2_voice   -0.090   0.090  ###
+    schumann          f_mean   +0.122   0.122  ####
+    schumann        f_spread   +0.106   0.106  ####
+          kp     voice_count   -0.309   0.309  ############
+          kp      emph_count   -0.236   0.236  #########
+          kp      manner_avg   +0.497   0.497  ###################
+          kp        c0_voice   -0.198   0.198  #######
+          kp        c1_voice   -0.279   0.279  ###########
+          kp        c2_voice   -0.310   0.310  ############
+          kp          f_mean   +0.130   0.130  #####
+          kp        f_spread   +0.111   0.111  ####
+        wind     voice_count   -0.519   0.519  ####################
+        wind      manner_avg   +0.525   0.525  #####################
+        wind        c0_voice   -0.383   0.383  ###############
+        wind        c1_voice   -0.469   0.469  ##################
+        wind        c2_voice   -0.471   0.471  ##################
+        wind          f_mean   +0.325   0.325  #############
+        wind        f_spread   +0.283   0.283  ###########
+
+  Strong correlations (|r|>0.15): 14
+    schumann ↔ emph_count:  r = +0.193
+    kp ↔ voice_count:  r = -0.309
+    kp ↔ emph_count:  r = -0.236
+    kp ↔ manner_avg:  r = +0.497
+    kp ↔ c0_voice:  r = -0.198
+    kp ↔ c1_voice:  r = -0.279
+    kp ↔ c2_voice:  r = -0.310
+    wind ↔ voice_count:  r = -0.519
+    wind ↔ manner_avg:  r = +0.525
+    wind ↔ c0_voice:  r = -0.383
+    wind ↔ c1_voice:  r = -0.469
+    wind ↔ c2_voice:  r = -0.471
+    wind ↔ f_mean:  r = +0.325
+    wind ↔ f_spread:  r = +0.283
+
+=== 2. Letter position bias ===
+  letter    pos1    pos2    pos3   total
+       د     484    2054    3026    5564
+       ب     979    2025     927    3931
+       ف     292    1625    1671    3588
+       ر     587     898    1045    2530
+       ز    1529     182     237    1948
+       ض    1290      58       0    1348
+       ط     305     490     264    1059
+       ن     401     176     326     903
+       ص     645     134       0     779
+       س     271     281     114     666
+       ذ     562      46      38     646
+       ق     126      50      95     271
+       ج     208       0      40     248
+       ح      87      12      85     184
+       م      80      63      37     180
+       ه      10       0     102     112
+       خ     109       0       0     109
+       ل      20      31      28      79
+       ع      38       0      41      79
+       ظ       0      39      40      79
+
+=== 3. Sequence structure ===
+  Identical consecutive turns: 1021/8170  (12.5%)
+  Mean shared letters (consecutive): 1.24
+  Overlap distribution:
+    0 shared letters:  1137  (13.9%)
+    1 shared letters:  4382  (53.6%)
+    2 shared letters:  2201  (26.9%)
+    3 shared letters:   450  (5.5%)
+
+=== 4. Triad frequency distribution ===
+  f1:  mean=  209.0  std=  139.8  range=[61, 722]
+  f2:  mean=  575.8  std=  513.5  range=[140, 2327]
+  f3:  mean= 2007.8  std= 2207.4  range=[295, 9875]
+      schumann ↔     f1:  r=+0.097
+      schumann ↔     f2:  r=+0.103
+      schumann ↔     f3:  r=+0.108
+      schumann ↔ f_mean:  r=+0.122
+            kp ↔     f2:  r=+0.173
+            kp ↔     f3:  r=+0.112
+            kp ↔ f_mean:  r=+0.130
+          wind ↔     f2:  r=+0.341
+          wind ↔     f3:  r=+0.288
+          wind ↔ f_mean:  r=+0.325
+
+=== 5. Root distribution by Kp regime ===
+  calm      n=  486  distinct=  31  H=4.32 bits
+           top5: ['طرد', 'بطن', 'نبط', 'ربط', 'بطر']
+  active    n= 7685  distinct= 104  H=5.12 bits
+           top5: ['ضدد', 'زبد', 'زفف', 'ذبب', 'صفف']
+
+=== 6. Lag analysis (does cosmic today predict tomorrow?) ===
+  schumann[t] ↔ voice_count[t+  1]:  r = -0.126  (n=8170)
+  schumann[t] ↔ voice_count[t+  5]:  r = -0.121  (n=8166)
+  schumann[t] ↔ voice_count[t+ 20]:  r = -0.101  (n=8151)
+  schumann[t] ↔ voice_count[t+100]:  r = +0.045  (n=8071)
+
+=== 7. Position asymmetry ===
+  Voiced at position 1: 6178/8171  (75.6%)
+  Voiced at position 3: 5785/8171  (70.8%)
+  Emphatic at position 1: 2240/8171  (27.4%)
+  Emphatic at position 3: 304/8171  (3.7%)
+
+============================================================
+SUMMARY — Top patterns found
+============================================================
+
+Top correlations (|r|>0.15):
+  wind ↔ manner_avg:  r = +0.525
+  wind ↔ voice_count:  r = -0.519
+  kp ↔ manner_avg:  r = +0.497
+  wind ↔ c2_voice:  r = -0.471
+  wind ↔ c1_voice:  r = -0.469
+

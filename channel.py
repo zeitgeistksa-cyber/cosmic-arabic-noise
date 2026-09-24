@@ -125,6 +125,9 @@ def main():
             line_roots = []
             for w in words[:8]:   # cap per line to keep pace
                 r = triliteral_skeleton(w)
+                # Skip common particles that get misidentified as roots
+                if r in ("وان", "وقد", "ولا", "وما", "ومن", "وما", "وان", "فما", "فمن"):
+                    continue
                 if r and len(r) == 3 and all(c in PHONEMES for c in r):
                     line_roots.append(r)
 

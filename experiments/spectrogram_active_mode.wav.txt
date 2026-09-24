@@ -1,0 +1,13 @@
+>> active_mode.wav  (445.5 s)
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/cosmic_arabic_noise/spectrogram.py", line 76, in <module>
+    stats(audio, sr)
+    ~~~~~^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/cosmic_arabic_noise/spectrogram.py", line 60, in stats
+    spec = np.abs(np.fft.rfft(audio))
+                  ~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/site-packages/numpy/fft/_pocketfft.py", line 417, in rfft
+    output = _raw_fft(a, n, axis, True, True, norm, out=out)
+  File "/data/data/com.termux/files/usr/lib/python3.13/site-packages/numpy/fft/_pocketfft.py", line 101, in _raw_fft
+    return ufunc(a, fct, axes=[(axis,), (), (axis,)], out=out)
+KeyboardInterrupt
