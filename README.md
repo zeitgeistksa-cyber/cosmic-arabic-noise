@@ -426,3 +426,13 @@ structure becomes the dominant audible content.
 
 Both configurations preserve the phase-transition signal in the
 telemetry. The rebalanced mix makes it audible.
+
+### 10f. Extended geomagnetic disturbance
+
+The geomagnetic event that triggered the phase transition at 07:09 UTC
+persisted for the remainder of the observation period. Kp remained at
+2.33 or higher for over five hours after the initial rise. A
+calm-mode recording with the rebalanced mix could not be captured
+within the session window. The active-mode signature (centroid 9,306
+Hz, std 304 Hz) is documented; the corresponding calm-mode audio
+comparison remains an open item.
