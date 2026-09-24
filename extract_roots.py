@@ -15,14 +15,27 @@ def normalize_alif(s):
     return "".join("ا" if c in ALIF_FORMS else c for c in s)
 
 def triliteral_skeleton(word):
+    """Extract a 3-letter root more conservatively.
+
+    Rules:
+    - Strip diacritics and normalize alif forms
+    - Only strip internal long vowels (ا و ي) that sit between consonants
+    - Preserve initial/final letters
+    - If the result is not exactly 3 letters, return None
+    """
     w = strip_diacritics(normalize_alif(word))
     w = "".join(c for c in w if c in PHONEME_LETTERS)
-    if len(w) < 3: return None
-    if len(w) == 3: return w
-    pruned = "".join(c for c in w if c not in WEAK)
-    if len(pruned) == 3: return pruned
-    if len(pruned) > 3:
-        return pruned[0] + pruned[len(pruned)//2] + pruned[-1]
+    if len(w) < 3:
+        return None
+    if len(w) == 3:
+        return w
+    # Strip ONLY internal weak letters
+    if len(w) >= 4:
+        first, middle, last = w[0], w[1:-1], w[-1]
+        middle_clean = "".join(c for c in middle if c not in WEAK)
+        candidate = first + middle_clean + last
+        if len(candidate) == 3:
+            return candidate
     return None
 
 def main():
