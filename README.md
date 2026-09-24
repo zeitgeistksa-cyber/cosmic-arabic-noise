@@ -177,3 +177,33 @@ Each produces a specific property. Together, they produce a sound that sits at t
 ### Amplitude modulation
 
 70% of the amplitude-envelope power concentrates in the 0.5-4 Hz band — the range every acoustic animal uses for communication. This is by design: the envelopes span seconds, the roots change every 9.2 seconds, and the 2 Hz LFO modulates the letter channels. The output lives in the same band as speech, whale song, cricket chirps, and human music.
+
+## 8. Three-way acoustic comparison — engine, poetry, Quran
+
+Center-of-gravity (CoG) is the mean noise-frequency band of each root's
+letters, averaged across three positions. Measured across three
+independent Arabic corpora:
+
+| Corpus | n | mean CoG | std CoG |
+|---|---|---|---|
+| Quran (top 30 roots) | 30 | 0.114 | 0.113 |
+| Poems (four classical + modern) | 29 | 0.216 | 0.156 |
+| Engine matcher (all turns) | 7,329 | 0.303 | 0.252 |
+
+Three properties:
+
+1. **The means are monotonic.** Prose sits lowest, poetry in the middle,
+   the matcher highest. The engine's preferred acoustic region lies
+   beyond anything human Arabic text produces at scale.
+2. **The standard deviations are monotonic.** The Quran is compressed
+   (std 0.11), poetry is medium (0.16), and the matcher spreads across
+   more than twice the Quran's range (0.25). Human Arabic occupies a
+   narrow band; the matcher explores a wide one.
+3. **The regions are mutually exclusive at the extremes.** The engine's
+   top-selected roots (صفف, زفف, حفف) sit almost entirely above the
+   mean CoG of both human corpora. The Quran's top roots (الا, ذين,
+   ولا) sit almost entirely below the engine's.
+
+The matcher is not approximating Arabic prose or Arabic poetry. It is
+a distinct acoustic region — one that real Arabic text systematically
+avoids.
