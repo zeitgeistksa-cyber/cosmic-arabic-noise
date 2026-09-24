@@ -69,3 +69,49 @@ def features_to_dataframe(roots):
     rows = [root_to_features(r) for r in roots]
     rows = [r for r in rows if r is not None]
     return pd.DataFrame(rows)
+
+
+def cog_distribution_stats(turns):
+    """Return mean and std of CoG across a list of turns."""
+    import statistics
+    cogs = []
+    for t in turns:
+        feats = root_to_features(t.get("root"))
+        if feats and "mean_CoG" in feats:
+            cogs.append(feats["mean_CoG"])
+    if not cogs:
+        return None
+    return {
+        "n": len(cogs),
+        "mean": statistics.mean(cogs),
+        "std": statistics.stdev(cogs) if len(cogs) > 1 else 0,
+        "min": min(cogs),
+        "max": max(cogs),
+    }
+
+
+
+def position_letter_frequency(roots):
+    """Count letter frequency at each of the three positions."""
+    from collections import Counter
+    pos1 = Counter(); pos2 = Counter(); pos3 = Counter()
+    for r in roots:
+        if len(r) != 3:
+            continue
+        pos1[r[0]] += 1
+        pos2[r[1]] += 1
+        pos3[r[2]] += 1
+    return {"pos1": pos1, "pos2": pos2, "pos3": pos3}
+
+
+def ocp_violation_rates(roots):
+    """Return identical-adjacent rates at each boundary."""
+    if not roots:
+        return None
+    n = len(roots)
+    return {
+        "n": n,
+        "pct_12": 100 * sum(1 for r in roots if r[0] == r[1]) / n,
+        "pct_23": 100 * sum(1 for r in roots if r[1] == r[2]) / n,
+        "pct_all": 100 * sum(1 for r in roots if r[0] == r[1] == r[2]) / n,
+    }
