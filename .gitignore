@@ -44,3 +44,10 @@ active_mode.raw
 active_mode.wav
 active_mode.raw
 active_mode.wav
+agent/context.md
+agent/explain.md
+agent/plan.md
+agent/suggestions.md
+agent/tasks.md
+agent/log.jsonl
+agent/history/
