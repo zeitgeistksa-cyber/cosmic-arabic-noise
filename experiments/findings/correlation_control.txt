@@ -1,0 +1,14 @@
+=== Null test: random selection vs random cosmic ===
+
+  run 0: schumann↔manner=+0.000  schumann↔emph=+0.011
+  run 1: schumann↔manner=+0.009  schumann↔emph=+0.005
+  run 2: schumann↔manner=-0.045  schumann↔emph=-0.031
+  run 3: schumann↔manner=-0.013  schumann↔emph=-0.023
+  run 4: schumann↔manner=+0.003  schumann↔emph=+0.008
+
+Observed from telemetry:
+  schumann ↔ manner_avg: r = -0.458
+  schumann ↔ emph_count: r = +0.255
+
+If null values cluster around |r| < 0.05, the observed correlations
+are real (not from the mapping).
