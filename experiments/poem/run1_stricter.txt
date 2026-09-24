@@ -1,0 +1,44 @@
+>> Poem roots: 8
+>> Corpus roots: 1583
+>> Cosmic vector: [0.38, 0.186, 0.182, 0.5]
+>> Cosmic raw: schumann=38 kp=1.67 wind=309
+
+============================================================
+1. POEM ROOTS vs RANDOM ROOTS (cosine to cosmic vector)
+============================================================
+  Poem  mean=0.4774  std=0.0348  n=5
+  Random mean=0.5112  std=0.0393  n=5000
+  z-score of poem mean vs random: -1.924
+  (no significant difference)
+
+============================================================
+2. POSITION ASYMMETRY IN POEM
+============================================================
+  position 1: {'ق': 1, 'ن': 1, 'ذ': 1, 'ح': 1, 'ب': 1, 'ي': 1, 'ل': 1, 'ج': 1}
+  position 2: {'ف': 1, 'ب': 2, 'ك': 1, 'ي': 1, 'ع': 1, 'م': 1, 'ن': 1}
+  position 3: {'ا': 2, 'ك': 1, 'ر': 1, 'ب': 2, 'ن': 1, 'ف': 1}
+  Emphatic at pos1: 0/8 (0.0%)
+  Emphatic at pos3: 0/8 (0.0%)
+
+============================================================
+3. ACOUSTIC FINGERPRINT (poem vs corpus mean)
+============================================================
+   dim      poem    corpus      diff
+    F1     0.412     0.417    -0.005
+    F2     1.383     1.321    +0.062
+    F3     2.454     2.433    +0.021
+   CoG     0.198     0.268    -0.070
+
+============================================================
+4. SIMULATED COSMIC STATES (does poem output change?)
+============================================================
+  calm      poem_cos_mean=0.3951  std=0.0371
+  active    poem_cos_mean=0.6533  std=0.0265
+  storm     poem_cos_mean=0.7462  std=0.0186
+
+  Top poem root under each simulated state:
+    calm     -> ذكر  sim=0.4580
+    active   -> ذكر  sim=0.7009
+    storm    -> ذكر  sim=0.7807
+
+>> wrote experiments/poem/analysis.json
