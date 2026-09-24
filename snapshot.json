@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-24T01:02:56Z",
+  "generated_at": "2026-09-24T01:04:34Z",
   "engine_version": "4.1",
   "latest": {
-    "session": "session_20260924_040254_dialogue.jsonl",
+    "session": "session_20260924_040431_dialogue.jsonl",
     "turns_total": 0,
     "turns_recent": 0,
     "distinct_roots": 0,
@@ -10,6 +10,11 @@
     "last_cosmic": null,
     "last_triad": null,
     "recent_turns": [],
-    "recent_decodes": []
+    "recent_decodes": [
+      {
+        "intended": "جسم",
+        "heard": "AIR|c=11241Hz|r=18949Hz|rough=0.53"
+      }
+    ]
   }
 }
