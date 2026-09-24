@@ -279,3 +279,37 @@ Real roots and random triples have nearly identical mean articulatory
 transition cost (1.224 vs 1.231, a 0.65% difference). Arabic does not,
 at this level of measurement, prefer smoother or rougher transitions
 between consonants than random arrangement.
+
+### 8b. Robustness check — unique roots only
+
+The three-way CoG comparison was recomputed using only the *distinct*
+roots each corpus contains (no repeats). This is a stricter test
+because it removes the effect of the engine revisiting the same roots:
+
+| Corpus | n | mean CoG | std CoG |
+|---|---|---|---|
+| Quran top 30 | 30 | 0.114 | 0.113 |
+| Poems | 29 | 0.216 | 0.156 |
+| Engine unique | 102 | 0.365 | 0.265 |
+
+The ordering holds and the effect *strengthens*. The engine's unique
+roots have higher mean CoG than its full-turn average (0.365 vs 0.303),
+because the engine's frequent repeats are biased toward lower-CoG
+roots than its rare excursions. The attractor is *within* the explored
+space, not at its center.
+
+### 8c. Sequential structure — metastability
+
+Across 7,527 engine turns, only 102 distinct roots were selected. The
+engine shows:
+
+- **Strong self-transitions**: ضدد → ضدد occurs 314 times
+- **Short hops**: consecutive roots share 1.25 letters on average
+- **Rare jumps**: distant root transitions are uncommon
+
+This is a metastable dynamic: the matcher locks onto attractor states
+and rarely escapes them. The behavior follows from the cosmic vector
+being nearly constant over the recording window, not from any
+intrinsic property of the matcher or the corpus. When the input
+becomes variable (Kp > 2), the metastable structure should relax.
+
