@@ -306,10 +306,10 @@ class DialogueEngine:
             hiss_perletter = (h0 * env1 + h1c * env2 + h2c * env3) * pn
 
         # ---- Final mix ----
-        mixed = (ar * 0.25                    # SIREN texture, subtle
-                 + triad_direct * 0.60        # the phoneme triads
-                 + sub_perletter * 0.15       # per-letter sub thump
-                 + hiss_perletter * 0.10)     # per-letter hiss
+        mixed = (ar * 0.10                    # SIREN texture, subtle
+                 + triad_direct[:, None] * 0.85        # the phoneme triads
+                 + sub_perletter[:, None] * 0.15       # per-letter sub thump
+                 + hiss_perletter[:, None] * 0.10)     # per-letter hiss
 
         sat = np.tanh(np.sin(mixed*2.2)*2.8)
         mv = np.max(np.abs(sat)) + 1e-9

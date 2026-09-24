@@ -412,8 +412,17 @@ Two properties appear in the audio:
    a narrow spectral basin; calm mode explores.
 
 The symbolic CoG change (0.30 to 0.74, a 2.5x shift) is larger than
-the audio centroid change because the SIREN texture dominates the
-signal (omega_0 = 45 multiplies all triads into the 10 kHz band). The
-root choice modulates *which* high-frequency pattern is heard, not
-the overall brightness. The clearest audio signature of the phase
-transition is the variance collapse, not the mean shift.
+the audio centroid change because the original mix had the SIREN
+texture at 25% and the phoneme triads at 60%, letting the SIREN's
+high-frequency content dominate. After rebalancing (SIREN to 10%,
+triads to 85%), the centroid drops from 10,483 Hz to 9,378 Hz, and
+the standard deviation grows 3.4x from 93 Hz to 316 Hz. The phoneme
+structure becomes the dominant audible content.
+
+| mix | centroid | std |
+|---|---|---|
+| SIREN 25% / triads 60% (original) | 10,483 Hz | 93 Hz |
+| SIREN 10% / triads 85% (rebalanced) | 9,378 Hz | 316 Hz |
+
+Both configurations preserve the phase-transition signal in the
+telemetry. The rebalanced mix makes it audible.
