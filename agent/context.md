@@ -12,13 +12,13 @@ A self-evolving neural noise engine driven by Arabic phoneme acoustics, live cos
 - .vercel/project.json  (124B)
 - .vercelignore  (144B)
 - README.md  (1517B)
-- agent/context.md  (14934B)
-- agent/explain.md  (369B)
-- agent/log.jsonl  (1927B)
+- agent/context.md  (11588B)
+- agent/explain.md  (1799B)
+- agent/log.jsonl  (2378B)
 - agent/nohup.log  (7625B)
-- agent/plan.md  (366B)
-- agent/suggestions.md  (5217B)
-- agent/tasks.md  (5210B)
+- agent/plan.md  (7042B)
+- agent/suggestions.md  (3906B)
+- agent/tasks.md  (3899B)
 - agent_orchestrator.py  (17339B)
 - arabic_noise_engine.py  (12589B)
 - autonomous_dev.py  (4560B)
@@ -265,49 +265,49 @@ def rhythm_score(freq_hz):
 
 {
   "session": "session_20260924_014738_dialogue.jsonl",
-  "turns": 1180,
-  "decodes": 1180,
-  "distinct_roots": 41,
+  "turns": 1263,
+  "decodes": 1263,
+  "distinct_roots": 42,
   "top_roots": [
     [
       "ضدد",
-      323
+      335
     ],
     [
       "زبد",
-      188
+      205
     ],
     [
       "ذبب",
-      120
+      126
     ],
     [
       "ردد",
-      74
+      77
     ],
     [
       "دبر",
-      48
+      51
     ],
     [
       "برد",
-      46
+      51
     ],
     [
       "بدر",
-      41
+      46
     ],
     [
       "درر",
-      32
-    ],
-    [
-      "برر",
-      28
+      36
     ],
     [
       "ندد",
-      27
+      33
+    ],
+    [
+      "برر",
+      30
     ]
   ],
   "last_cosmic": {
@@ -317,11 +317,11 @@ def rhythm_score(freq_hz):
     "bz": null
   },
   "last_5_roots": [
-    "ردد",
-    "جرد",
-    "زبد",
-    "ضرب",
-    "دبر"
+    "ندد",
+    "لبد",
+    "برد",
+    "بدر",
+    "برد"
   ]
 }
 
@@ -330,6 +330,7 @@ def rhythm_score(freq_hz):
 ## Git State
 ```
 
+f78e4dc P0: fix cosine clipping in root_semantics
 99a9be2 Move viewer files to repo root for GitHub Pages
 250e964 Force refresh for GitHub Pages dropdown
 6ee72e8 snapshot: 2026-09-23T23:38:11Z
@@ -337,18 +338,9 @@ af98938 Point README at GitHub Pages viewer
 30e74ce Remove vercel.json — using GitHub Pages instead
 8dfc912 Tell Vercel to serve /public
 bf3552b Add vercelignore to trim deploy size
-9162879 snapshot: 2026-09-23T23:28:07Z
 ---
-M agent/context.md
- M agent/explain.md
- M agent/log.jsonl
- M agent/plan.md
- M agent/suggestions.md
- M agent/tasks.md
- M agent_orchestrator.py
+M agent/log.jsonl
  M snapshot.json
-?? agent/history/cycle_0001_20260924_030038.md
-?? agent/history/cycle_0001_20260924_030350.md
 
 ```
 

@@ -1,15 +1,15 @@
 # Project Explanation
 
-_Generated 20260924_030552_
+_Generated 20260924_031212_
 
-- **Live cosmic data → sonic vector mapping** – The engine polls real‑time space‑weather feeds (Schumann resonance, Kp index, solar‑wind speed) and turns the raw numbers into an 8‑dimensional “cosmic semantic vector” that captures intensity, coherence, turbulence, etc.
+- **Live sonic engine that “talks” to the cosmos:** The engine continually polls real‑time space‑weather data (Schumann resonance, solar wind, Kp index) via `cosmic_driver.py` and maps each parameter to an 8‑dimensional “cosmic semantic vector.” The vector is used to pick an Arabic root whose phoneme‑derived vector best matches the cosmic state, so the sound output changes in lockstep with space‑weather dynamics.  
 
-- **Arabic phonemes as acoustic primitives** – Each Arabic letter is represented by a small spectral fingerprint (F1/F2/F3/Cosine‑of‑Gravity). These fingerprints form the building blocks that encode how a root will sound when spoken or rendered as noise.
+- **Arabic phoneme–semantic mapping:** Each Arabic letter is assigned acoustic fingerprints (F1–F3, CoG) and linguistic traits (voice, emphatic, manner). `root_semantics.py` converts a three‑letter root into an 8‑dimensional semantic vector that captures intensity, coherence, expansion, etc., allowing roots to be ranked by similarity to the current cosmic vector.  
 
-- **Root‑to‑semantic mapping** – Three‑letter Arabic roots are turned into 8‑dim vectors by combining their constituent phoneme fingerprints with linguistic cues (voicing, emphatic, manner). The result is a numeric representation of the root’s sonic “meaning”.
+- **Universal rhythmic LFO (2 Hz ± sub‑ and overtone):** `universal_rhythm.py` provides a multi‑harmonic low‑frequency oscillator centred at 2 Hz, the “communication rhythm” of the project. This rhythmic scaffold modulates the pitch‑pitch envelope of the chosen root, synchronising sonic output to the global 2 Hz pulsation of electromagnetic phenomena.  
 
-- **Cosmic‑root matching** – At every tick the engine computes the cosine distance between the current cosmic vector and all stored root vectors, then selects the root(s) whose semantic signature best matches the cosmos. That root becomes the next audio phrase, creating a dialogue where the universe “asks” for a root.
+- **Self‑evolving “dialogue” mode:** The engine logs every root it emits (`telemetry_dir`) and automatically updates its internal root‑selection model. Over time the system “learns” which roots resonate best with each cosmic regime, creating an evolving dialogue between human‑language noise and space‑weather patterns.  
 
-- **Universal rhythm and LFO control** – A 2 Hz central beat (with sub‑ and super‑harmonics) modulates amplitude and spectral parameters, ensuring the generated noise follows an intrinsic cosmic tempo while remaining sensitive to the instantaneous cosmic state.
+- **Open‑source, reproducible pipeline:** All components (`dialogue_engine.py`, `cosmic_semantics.py`, `phoneme_grammar.py`, etc.) are modular and version‑controlled, allowing researchers to tweak the phoneme semantics, cosmic mapping functions, or rhythm parameters and immediately hear the effect in a live audio stream.  
 
-- **Artistic‑scientific fusion** – By letting Arabic phonological structure converse with live space‑weather, the project demonstrates how linguistic sound patterns can act as a real‑time interface to celestial phenomena, offering a new medium for scientific visualization, audio‑art, and cultural exploration.
+- **Bridging language, physics, and art:** By translating Arabic roots into acoustic “messages” that echo the behaviour of the Earth’s magnetosphere and solar wind, the project demonstrates a novel way of using human linguistic structures as a medium for planetary‑scale sonification, offering new insights for both linguistics and space‑science audiences.

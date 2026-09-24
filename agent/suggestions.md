@@ -1,39 +1,34 @@
 # Code Suggestions
 
-_Generated 20260924_030552_
+_Generated 20260924_031212_
 
 **TODO List**
 
-```
-[ ] [P0] Resolve dialogue_engine root loading fallback – complete the truncated error handling and provide a graceful fallback when roots.txt is missing or corrupted.
-[ ] [P0] Ensure root_semantics precomputation runs on import – call the precompute routine at module load to cache semantic vectors for fast lookup.
-[ ] [P0] Update train_gen.py to consume the newly cached root semantic vectors – modify the training pipeline to import and use root_semantic from root_semantics instead of recalculating each batch.
-[ ] [P1] Add type hints to dialogue_engine functions – improve readability and IDE support.
-[ ] [P1] Remove hard‑coded SR/CHUNK values from dialogue_engine – expose them as config parameters.
-[ ] [P1] Implement graceful shutdown handling in keep_running.sh – trap SIGTERM and ensure telemetry is flushed.
-[ ] [P1] Refactor universal_rhythm.lfo to use SciPy's signal library – enhance waveform accuracy.
-[ ] [P2] Write unit tests for root_semantics letter_semantic – validate the semantic axes against known inputs.
-[ ] [P2] Add a cache for cosmic_semantic_vector results – reduce redundant polling when called in quick succession.
-[ ] [P2] Simplify cosmic_driver.poll to return a dict of only relevant keys – avoid leaking internal state.
-[ ] [P2] Create a Dockerfile for deployment – enable reproducible container builds.
-[ ] [P2] Add logging configuration to main – centralise log level via environment variable.
-[ ] [P2] Update README with a quick‑start guide – help new contributors run the engine locally.
-[ ] [P2] Clean up unused imports in dialogue_engine – reduce import overhead.
-[ ] [P2] Convert the root list to a set for O(1) membership checks – speed up root validation.
-```
+[ ] **P0** Implement robust fallback for missing roots file in `dialogue_engine.load_roots` – gracefully handle `roots.txt` absence and log a clear warning.  
+[ ] **P0** Add unit tests for `root_semantics.letter_semantic` to confirm all 8 semantic axes stay within [0, 1] bounds.  
+[ ] **P0** Fix missing imports in `root_semantics.py` – import `MAKHRAJ`, `VOICED`, `EMPHATIC`, and `MANNER` from `phoneme_grammar`.  
+[ ] **P0** Implement caching of pre‑computed root semantic vectors in `root_semantics.precompute` to avoid repeated calculations.  
+[ ] **P0** Ensure `universal_rhythm_lfo` handles negative time inputs gracefully by clamping or normalising `t`.  
+[ ] **P0** Add an `__all__` export list in `root_semantics.py` for public functions.  
+[ ] **P1** Add a command‑line interface to `dialogue_engine.py` to run a single dialogue turn or a quick test mode.  
+[ ] **P1** Implement graceful shutdown handling (SIGTERM/SIGINT) in `keep_running.sh` or the main process.  
+[ ] **P1** Provide fallback behavior in `cosmic_semantics.cosmic_semantic_vector` when `CosmicDriver.poll()` fails or returns `None`.  
+[ ] **P1** Optimize history handling in `cosmic_semantics` by reusing a NumPy array instead of reallocating every call.  
+[ ] **P2** Add a descriptive docstring to `extract_roots.py` explaining the input root format and output.  
+[ ] **P2** Ensure `phoneme_table.PHONEME_LETTERS` is correctly defined and exported.  
+[ ] **P2** Add missing imports for `root_semantic` and `precompute` in `dialogue_engine.py`.  
+[ ] **P2** Log the selected root and its cosine similarity score to the telemetry JSONL file.  
+[ ] **P2** Add a dependency check for `numpy` in the project's `requirements.txt` or CI configuration.  
 
 ---
 
-### Top 3 Code Changes
+### Top‑3 Code Changes
 
----
+#### 1. `dialogue_engine.py` – Robust fallback for missing roots file
 
-**1. `dialogue_engine.py` – Fix root loading fallback**
-
-**Why:** The current fallback is truncated, causing a runtime error when `roots.txt` is missing or malformed. We need a clear, safe fallback that loads a default root list or exits gracefully.
+**Why:** Prevents crashes and ensures the engine continues running even if the roots database is absent.
 
 ```python
-# dialogue_engine.py
 def load_roots():
     txt = Path("arabic_db/roots.txt")
     if txt.exists():
@@ -42,40 +37,49 @@ def load_roots():
         if valid:
             print(f"[dialogue] loaded {len(valid)} roots", file=sys.stderr, flush=True)
             return valid
-    # Fallback: use a minimal built‑in list or exit
-    print("[dialogue] warning: roots.txt missing or invalid – using built‑in defaults", file=sys.stderr, flush=True)
-    default_roots = ["الل", "الأ"]  # example short roots
-    if not default_roots:
-        raise RuntimeError("[dialogue] no valid roots available; aborting")
-    return default_roots
+        print("[dialogue] roots file found but no valid roots parsed", file=sys.stderr)
+    else:
+        print("[dialogue] roots file missing; using empty root list", file=sys.stderr)
+    return []  # safe fallback
 ```
 
 ---
 
-**2. `root_semantics.py` – Trigger precomputation on import**
+#### 2. `root_semantics.py` – Add missing imports
 
-**Why:** `root_semantics` exposes `root_semantic()` but never pre‑computes the vector cache, leading to repeated expensive calculations. Calling `precompute()` at import ensures the cache is ready.
+**Why:** `MAKHRAJ`, `VOICED`, `EMPHATIC`, and `MANNER` are required for semantic calculation; missing imports cause a runtime NameError.
 
 ```python
-# root_semantics.py
-# At module import, pre‑compute the semantic vectors for all known roots
-precompute()
+from phoneme_grammar import MAKHRAJ, VOICED, EMPHATIC, MANNER
+```
+
+Add this line near the existing imports:
+
+```python
+import numpy as np
+from phoneme_table import PHONEMES
+# ───────────────────────────────────────────────────────
+# NEW IMPORTS
+from phoneme_grammar import MAKHRAJ, VOICED, EMPHATIC, MANNER
 ```
 
 ---
 
-**3. `train_gen.py` – Consume cached root semantic vectors**
+#### 3. `root_semantics.py` – Cache pre‑computed root semantic vectors
 
-*(Assuming `train_gen.py` exists in the repo; if not, this change shows how to integrate the new cache.)*
-
-**Why:** Training data generation benefits from fast root‑to‑vector lookup; using the cached vectors from `root_semantics` speeds up batch creation and reduces CPU usage.
+**Why:** Re‑computing the 8‑dimensional vector for every root on each dialogue turn is wasteful; caching improves performance.
 
 ```python
-# train_gen.py
-from root_semantics import root_semantic
+# Module‑level cache for root semantic vectors
+_root_semantic_cache = {}
 
-def generate_training_batch(batch_size=32):
-    roots = load_roots()   # load from file or fallback
-    batch_vectors = np.stack([root_semantic(r) for r in np.random.choice(roots, batch_size)])
-    return batch_vectors
+def precompute(root: str):
+    """Return the 8‑dimensional semantic vector for a root, using cache."""
+    if root in _root_semantic_cache:
+        return _root_semantic_cache[root]
+    vector = np.array([letter_semantic(ch) for ch in root]).mean(axis=0)
+    _root_semantic_cache[root] = vector
+    return vector
 ```
+
+Replace the existing `precompute` implementation (if any) with the above snippet, ensuring that `letter_semantic` remains unchanged. This change guarantees that each unique root is computed only once during the program’s lifetime.
