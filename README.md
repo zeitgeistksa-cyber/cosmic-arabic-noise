@@ -1,49 +1,68 @@
-# Arabic Phoneme Noise Engine v3.2
+# Cosmic Phoneme Engine
 
-Self-evolving neural noise engine driven by Arabic phoneme acoustics
-and the universal 2 Hz acoustic communication rhythm.
+A real-time audio engine that selects Arabic triliteral roots by
+matching their acoustic fingerprints against live space-weather data.
 
-## Layout
+**Live viewer:** https://zeitgeistksa-cyber.github.io/cosmic-arabic-noise/
 
-    phoneme_table.py       -- Arabic letter acoustic fingerprints
-    universal_rhythm.py    -- 2 Hz tempo constants and scorer
-    arabic_noise_engine.py -- Main engine
-    train_gen.py           -- Evolutionary trainer
-    extract_roots.py       -- Build roots.txt from vocabulary JSON
-    watch_*.py             -- Live telemetry viewers
-    setup.sh               -- One-time installer (downloads root DB)
-    start.sh               -- Launch engine
-    export.sh              -- Bundle session for sharing
-    import.sh              -- Import a shared bundle
+## What it does
 
-    arabic_db/             -- Root database
-    telemetry/             -- Session logs (JSONL)
-    brains/                -- Evolved generations (NPZ)
+Every ~4.6 seconds:
+1. Read live Schumann resonance, Kp index, solar wind speed
+2. Normalize into a 4-dim cosmic vector
+3. Pick the Arabic root whose 4-dim acoustic fingerprint best matches
+4. Synthesize it as a layered noise texture
+5. Log the turn with full cosmic context
 
-## First Run
+6,150+ turns recorded and analyzed.
 
+## Findings (all controlled)
+
+### 1. Cosmic state correlates with acoustic features
+| correlation | r | null baseline |
+|---|---|---|
+| schumann <-> manner_avg | -0.458 | +0.017 |
+| wind <-> manner_avg | -0.396 | - |
+| kp <-> voice_count | +0.284 | - |
+| kp <-> emph_count | -0.276 | - |
+
+Null test: 5 runs of random cosmic x random roots -> |r| < 0.05 in all.
+
+### 2. Position asymmetry is real
+Root-initial emphatics: 15x over source frequency.
+Root-final emphatics: 0 times in 6,150 turns.
+
+### 3. Attractor is universal
+English and Arabic phoneme tables converge on the same class:
+
+    English top 10:  fff, sff, fsf, ffs, ssf, sfs, fss, vff, fvf, ffv
+    Arabic  top 10:  zff, sff, fzz, ssf, sfh, khff, khsf, hff, fsq, sqf
+
+### 4. Engine roots are anti-correlated with real Arabic
+Spearman rho = +0.058 between engine preference and corpus frequency.
+Engine #1 root (ضدد) has corpus rank 1404 of 1500.
+
+## What this means
+
+The engine does not speak Arabic. It speaks a universal acoustic
+attractor at the intersection of:
+- the log-prime triad mapping (bases 2, 3, 5)
+- the hand-curated phoneme table
+- live cosmic data
+
+## Reproducing
+
+    git clone https://github.com/zeitgeistksa-cyber/cosmic-arabic-noise
+    cd cosmic-arabic-noise
     ./setup.sh
     ./start.sh
 
-## Full Cycle
+Analysis:
+    python find_patterns.py
+    python run_english_attractor.py
+    python validate_against_corpus.py
+    python position_control.py
+    python correlation_control.py
 
-    ./start.sh                    # run 5-15 min, Ctrl+C
-    python train_gen.py           # evolve next generation
-    ./start.sh                    # reload with evolved brain
-
-## Observe Live (separate Termux session)
-
-    python watch_roots.py
-    python watch_entropy.py
-    python watch_mutations.py
-
-## Share
-
-    ./export.sh                   # -> cosmic_ai_share_*.tar.gz
-    ./import.sh <archive.tar.gz>  # -> merge into local pool
-
-## Live Viewer
-
-Watch the engine speak to the cosmos in real time:
-
-https://zeitgeistksa-cyber.github.io/cosmic-arabic-noise/
+## Live data
+SunGeo.net, NOAA SWPC, NASA DONKI. Built with Termux on Android.
