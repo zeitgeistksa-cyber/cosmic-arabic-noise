@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-24T01:04:34Z",
+  "generated_at": "2026-09-24T01:06:52Z",
   "engine_version": "4.1",
   "latest": {
-    "session": "session_20260924_040431_dialogue.jsonl",
+    "session": "session_20260924_040650_dialogue.jsonl",
     "turns_total": 0,
     "turns_recent": 0,
     "distinct_roots": 0,
@@ -12,8 +12,8 @@
     "recent_turns": [],
     "recent_decodes": [
       {
-        "intended": "جسم",
-        "heard": "AIR|c=11241Hz|r=18949Hz|rough=0.53"
+        "intended": "قطر",
+        "heard": "AIR|c=11059Hz|r=18906Hz|rough=0.56"
       }
     ]
   }
