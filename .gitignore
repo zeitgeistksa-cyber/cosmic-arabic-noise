@@ -51,3 +51,10 @@ agent/suggestions.md
 agent/tasks.md
 agent/log.jsonl
 agent/history/
+knowledge.jsonl
+storms.jsonl
+storms/
+experiments/timeline.jsonl
+experiments/reports/
+*.raw
+forced_cosmic.py
