@@ -376,3 +376,20 @@ changes in Kp below that value.
 This is a stronger claim than the original correlation because it is
 discrete, reproducible, and directly observable in the audio output.
 
+
+### 10d. Cross-language scale comparison
+
+| quantity | value |
+|---|---|
+| Arabic mean CoG (all letters) | 0.302 -- 0.410 |
+| English mean CoG (all letters) | 0.3615 |
+| Difference between languages | ~0.06 |
+| Cosmic-driven CoG span | 0.44 |
+
+The cosmic vector has roughly **7x** the dynamic range of the
+difference between two unrelated phoneme inventories. Under calm
+conditions the matcher sits near each language's centroid. Under
+active conditions it moves to ~0.74, a region no language centers on,
+forcing the matcher into the rare high-CoG tail of whatever inventory
+it is given. The apparent universality of the attractor is a property
+of the input's geometry, not the language.
