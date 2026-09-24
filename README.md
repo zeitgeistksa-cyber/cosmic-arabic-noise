@@ -393,3 +393,27 @@ active conditions it moves to ~0.74, a region no language centers on,
 forcing the matcher into the rare high-CoG tail of whatever inventory
 it is given. The apparent universality of the attractor is a property
 of the input's geometry, not the language.
+
+### 10e. Audio verification of the phase transition
+
+Spectral centroid measured on 5-second windows of the raw audio:
+
+| recording | Kp | duration | centroid | std |
+|---|---|---|---|---|
+| calm_1 (cosmic_capture.wav) | 1.67 | 85 s | 10,145 Hz | 261 Hz |
+| calm_2 (one_hour.wav) | 1.67 | 35 s | 10,049 Hz | 269 Hz |
+| active (active_mode.wav) | 2.33 | 445 s | 10,483 Hz | 93 Hz |
+
+Two properties appear in the audio:
+
+1. **Centroid shifts +400 Hz** (calm ~10,100 to active ~10,500). Small
+   but consistent with the symbolic CoG shift.
+2. **Variance collapses 2.8x** (std 265 to 93). Active mode locks onto
+   a narrow spectral basin; calm mode explores.
+
+The symbolic CoG change (0.30 to 0.74, a 2.5x shift) is larger than
+the audio centroid change because the SIREN texture dominates the
+signal (omega_0 = 45 multiplies all triads into the 10 kHz band). The
+root choice modulates *which* high-frequency pattern is heard, not
+the overall brightness. The clearest audio signature of the phase
+transition is the variance collapse, not the mean shift.
