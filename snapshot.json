@@ -1,54 +1,50 @@
 {
-  "generated_at": "2026-09-24T03:58:56Z",
+  "generated_at": "2026-09-24T04:09:00Z",
   "engine_version": "4.1",
   "latest": {
     "session": "session_20260924_052820_dialogue.jsonl",
-    "turns_total": 678,
+    "turns_total": 744,
     "turns_recent": 200,
-    "distinct_roots": 26,
+    "distinct_roots": 31,
     "top_roots": [
       [
-        "صفف",
-        55
-      ],
-      [
         "زفف",
-        52
+        62
       ],
       [
-        "صصف",
-        15
+        "صفف",
+        37
       ],
       [
         "فزز",
-        9
+        19
       ],
       [
-        "عفف",
-        6
+        "صصف",
+        11
       ],
       [
         "سفه",
         6
       ],
       [
-        "فظظ",
-        5
-      ],
-      [
         "افف",
         5
       ],
       [
-        "فسق",
+        "عفف",
+        5
+      ],
+      [
+        "سقف",
+        5
+      ],
+      [
+        "سفر",
         4
       ],
       [
-        "حفف",
-        4
-      ],
-      [
-        "ثقف",
+        "جسس",
         4
       ],
       [
@@ -56,406 +52,410 @@
         4
       ],
       [
-        "سفر",
-        4
+        "ثقف",
+        3
       ],
       [
-        "سقف",
-        4
+        "كسف",
+        3
       ],
       [
-        "سفح",
+        "فسق",
+        3
+      ],
+      [
+        "فظظ",
         3
       ]
     ],
     "last_cosmic": {
       "schumann_score": 38,
-      "kp_value": 1.67,
-      "wind_speed": 329,
+      "kp_value": 3,
+      "wind_speed": 333,
       "bz": 0.0
     },
     "last_triad": [
-      220.0,
-      1263.7528269391494,
-      4104.660425236359
+      90.23688916084018,
+      475.9423582014447,
+      1273.3137029477198
     ],
     "recent_turns": [
       {
-        "turn": 654,
+        "turn": 720,
         "root": "فزز",
-        "sim": 0.649,
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 655,
-        "root": "خسف",
-        "sim": 0.645,
+        "turn": 721,
+        "root": "فزز",
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 656,
-        "root": "خسف",
-        "sim": 0.645,
+        "turn": 722,
+        "root": "فزز",
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 657,
-        "root": "زفف",
-        "sim": 0.663,
+        "turn": 723,
+        "root": "سفع",
+        "sim": 0.691,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 658,
+        "turn": 724,
         "root": "صفف",
-        "sim": 0.664,
+        "sim": 0.705,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 659,
-        "root": "افف",
-        "sim": 0.635,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 660,
-        "root": "صفف",
-        "sim": 0.664,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 661,
+        "turn": 725,
         "root": "زفف",
-        "sim": 0.663,
+        "sim": 0.712,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 662,
-        "root": "زفف",
-        "sim": 0.663,
+        "turn": 726,
+        "root": "فزز",
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 663,
+        "turn": 727,
         "root": "صصف",
-        "sim": 0.651,
+        "sim": 0.691,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 664,
-        "root": "صفف",
-        "sim": 0.664,
+        "turn": 728,
+        "root": "سدس",
+        "sim": 0.677,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 665,
-        "root": "حفف",
-        "sim": 0.643,
+        "turn": 729,
+        "root": "فزز",
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 666,
+        "turn": 730,
+        "root": "زفف",
+        "sim": 0.712,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 731,
+        "root": "اسس",
+        "sim": 0.69,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 732,
+        "root": "زفف",
+        "sim": 0.712,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 733,
         "root": "سفه",
-        "sim": 0.647,
+        "sim": 0.702,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 667,
-        "root": "صفف",
-        "sim": 0.664,
+        "turn": 734,
+        "root": "ستت",
+        "sim": 0.686,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 668,
-        "root": "صفف",
-        "sim": 0.664,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 669,
+        "turn": 735,
         "root": "زفف",
-        "sim": 0.663,
+        "sim": 0.712,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 670,
-        "root": "فزز",
-        "sim": 0.649,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 671,
-        "root": "صصف",
-        "sim": 0.651,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 672,
-        "root": "فسق",
-        "sim": 0.642,
-        "cosmic": {
-          "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
-          "bz": 0.0
-        }
-      },
-      {
-        "turn": 673,
+        "turn": 736,
         "root": "زفف",
-        "sim": 0.663,
+        "sim": 0.712,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 674,
-        "root": "صصف",
-        "sim": 0.651,
+        "turn": 737,
+        "root": "كسف",
+        "sim": 0.692,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 675,
+        "turn": 738,
         "root": "فزز",
-        "sim": 0.649,
+        "sim": 0.706,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 676,
-        "root": "سقف",
-        "sim": 0.642,
+        "turn": 739,
+        "root": "حسس",
+        "sim": 0.696,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 677,
-        "root": "كفف",
-        "sim": 0.637,
+        "turn": 740,
+        "root": "حسس",
+        "sim": 0.696,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       },
       {
-        "turn": 678,
-        "root": "صفف",
-        "sim": 0.664,
+        "turn": 741,
+        "root": "زفف",
+        "sim": 0.712,
         "cosmic": {
           "schumann_score": 38,
-          "kp_value": 1.67,
-          "wind_speed": 329,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 742,
+        "root": "زفف",
+        "sim": 0.712,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 743,
+        "root": "زفف",
+        "sim": 0.712,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
+          "bz": 0.0
+        }
+      },
+      {
+        "turn": 744,
+        "root": "جسس",
+        "sim": 0.699,
+        "cosmic": {
+          "schumann_score": 38,
+          "kp_value": 3,
+          "wind_speed": 333,
           "bz": 0.0
         }
       }
     ],
     "recent_decodes": [
       {
+        "intended": "اسس",
+        "heard": "AIR|c=10916Hz|r=18691Hz|rough=0.60"
+      },
+      {
+        "intended": "زفف",
+        "heard": "HIGH|c=6382Hz|r=15181Hz|rough=0.23"
+      },
+      {
+        "intended": "زفف",
+        "heard": "AIR|c=10965Hz|r=18820Hz|rough=0.59"
+      },
+      {
         "intended": "سفه",
-        "heard": "AIR|c=11056Hz|r=18755Hz|rough=0.61"
+        "heard": "HIGH|c=6737Hz|r=15784Hz|rough=0.22"
       },
       {
-        "intended": "صفف",
-        "heard": "HIGH|c=6443Hz|r=15030Hz|rough=0.24"
+        "intended": "سفه",
+        "heard": "AIR|c=11100Hz|r=18669Hz|rough=0.60"
       },
       {
-        "intended": "صفف",
-        "heard": "AIR|c=10922Hz|r=18540Hz|rough=0.62"
+        "intended": "ستت",
+        "heard": "HIGH|c=5985Hz|r=15956Hz|rough=0.24"
       },
       {
-        "intended": "صفف",
-        "heard": "HIGH|c=6385Hz|r=14879Hz|rough=0.24"
-      },
-      {
-        "intended": "صفف",
-        "heard": "AIR|c=10922Hz|r=18583Hz|rough=0.60"
+        "intended": "ستت",
+        "heard": "AIR|c=11122Hz|r=18777Hz|rough=0.59"
       },
       {
         "intended": "زفف",
-        "heard": "HIGH|c=6321Hz|r=14901Hz|rough=0.23"
+        "heard": "HIGH|c=6598Hz|r=15633Hz|rough=0.24"
       },
       {
         "intended": "زفف",
-        "heard": "AIR|c=10842Hz|r=18540Hz|rough=0.60"
-      },
-      {
-        "intended": "فزز",
-        "heard": "HIGH|c=5862Hz|r=15461Hz|rough=0.24"
-      },
-      {
-        "intended": "فزز",
-        "heard": "AIR|c=10892Hz|r=18734Hz|rough=0.61"
-      },
-      {
-        "intended": "صصف",
-        "heard": "HIGH|c=6331Hz|r=15525Hz|rough=0.22"
-      },
-      {
-        "intended": "صصف",
-        "heard": "AIR|c=11050Hz|r=18712Hz|rough=0.61"
-      },
-      {
-        "intended": "فسق",
-        "heard": "HIGH|c=6729Hz|r=15913Hz|rough=0.23"
-      },
-      {
-        "intended": "فسق",
-        "heard": "AIR|c=11032Hz|r=18712Hz|rough=0.59"
+        "heard": "AIR|c=10927Hz|r=18820Hz|rough=0.61"
       },
       {
         "intended": "زفف",
-        "heard": "HIGH|c=6725Hz|r=15655Hz|rough=0.23"
+        "heard": "HIGH|c=6413Hz|r=14966Hz|rough=0.24"
       },
       {
         "intended": "زفف",
-        "heard": "AIR|c=11052Hz|r=18712Hz|rough=0.59"
+        "heard": "AIR|c=10924Hz|r=18691Hz|rough=0.61"
       },
       {
-        "intended": "صصف",
-        "heard": "HIGH|c=6238Hz|r=15655Hz|rough=0.23"
+        "intended": "كسف",
+        "heard": "HIGH|c=6884Hz|r=16538Hz|rough=0.23"
       },
       {
-        "intended": "صصف",
-        "heard": "AIR|c=10911Hz|r=18755Hz|rough=0.59"
-      },
-      {
-        "intended": "فزز",
-        "heard": "HIGH|c=5796Hz|r=15396Hz|rough=0.23"
+        "intended": "كسف",
+        "heard": "AIR|c=10965Hz|r=18626Hz|rough=0.61"
       },
       {
         "intended": "فزز",
-        "heard": "AIR|c=10857Hz|r=18777Hz|rough=0.60"
+        "heard": "HIGH|c=5885Hz|r=15224Hz|rough=0.23"
       },
       {
-        "intended": "سقف",
-        "heard": "HIGH|c=6656Hz|r=15353Hz|rough=0.24"
+        "intended": "فزز",
+        "heard": "AIR|c=11057Hz|r=19035Hz|rough=0.60"
       },
       {
-        "intended": "سقف",
-        "heard": "AIR|c=10878Hz|r=18798Hz|rough=0.62"
+        "intended": "حسس",
+        "heard": "HIGH|c=7020Hz|r=16817Hz|rough=0.23"
       },
       {
-        "intended": "كفف",
-        "heard": "HIGH|c=6553Hz|r=15310Hz|rough=0.24"
+        "intended": "حسس",
+        "heard": "AIR|c=10869Hz|r=18669Hz|rough=0.60"
       },
       {
-        "intended": "كفف",
-        "heard": "AIR|c=11106Hz|r=18798Hz|rough=0.61"
+        "intended": "حسس",
+        "heard": "HIGH|c=6742Hz|r=15784Hz|rough=0.23"
       },
       {
-        "intended": "صفف",
-        "heard": "HIGH|c=6276Hz|r=14772Hz|rough=0.23"
+        "intended": "حسس",
+        "heard": "AIR|c=11118Hz|r=18777Hz|rough=0.61"
       },
       {
-        "intended": "صفف",
-        "heard": "AIR|c=11148Hz|r=18928Hz|rough=0.60"
+        "intended": "زفف",
+        "heard": "HIGH|c=6595Hz|r=15375Hz|rough=0.23"
+      },
+      {
+        "intended": "زفف",
+        "heard": "AIR|c=11002Hz|r=18777Hz|rough=0.60"
+      },
+      {
+        "intended": "زفف",
+        "heard": "HIGH|c=6703Hz|r=15805Hz|rough=0.24"
+      },
+      {
+        "intended": "زفف",
+        "heard": "AIR|c=11110Hz|r=18691Hz|rough=0.61"
+      },
+      {
+        "intended": "زفف",
+        "heard": "HIGH|c=6714Hz|r=15676Hz|rough=0.24"
+      },
+      {
+        "intended": "زفف",
+        "heard": "AIR|c=11031Hz|r=18755Hz|rough=0.58"
       }
     ]
   }
