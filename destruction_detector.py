@@ -90,7 +90,7 @@ def ask_ai(kp, level, sch, wind):
 def main():
     print(">> Destruction Detector online.", file=sys.stderr, flush=True)
     last_record = 0
-    last_level = "calm"
+    last_level = None  # initialize from first real reading
 
     while True:
         try:
@@ -105,6 +105,12 @@ def main():
             level = level_for(kp)
             now = time.time()
             ts = datetime.now().strftime("%H:%M:%S")
+
+            # Skip the level-change log on the very first poll
+            if last_level is None:
+                last_level = level
+                time.sleep(POLL_SEC)
+                continue
 
             # Detect a level change (upward)
             if level != last_level:

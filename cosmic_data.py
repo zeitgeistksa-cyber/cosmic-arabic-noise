@@ -88,6 +88,16 @@ def get_donki_cme(days=7):
 
 def snapshot():
     """Return a compact dict of current cosmic state."""
+    # Test override — if FORCE_KP is set, use it instead of live data
+    import os as _os
+    if _os.environ.get("FORCE_KP"):
+        return {
+            "ts": time.time(),
+            "schumann_score": float(_os.environ.get("FORCE_SCHUMANN", 38)),
+            "kp_value": float(_os.environ["FORCE_KP"]),
+            "wind_speed": float(_os.environ.get("FORCE_WIND", 400)),
+            "bz": float(_os.environ.get("FORCE_BZ", 0)),
+        }
     out = {"ts": time.time()}
 
     # Schumann / SunGeo composite
