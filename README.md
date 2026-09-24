@@ -207,3 +207,29 @@ Three properties:
 The matcher is not approximating Arabic prose or Arabic poetry. It is
 a distinct acoustic region — one that real Arabic text systematically
 avoids.
+
+### Effect sizes (Cohen's d)
+
+| Comparison | d | Interpretation |
+|---|---|---|
+| Engine vs Quran | +0.75 | medium-large, engine higher |
+| Engine vs Poems | +0.35 | small-medium, engine higher |
+| Poems vs Quran | +0.75 | medium-large, poems higher |
+
+The Engine-vs-Quran and Poems-vs-Quran effect sizes are numerically
+identical (0.75). This is a coincidence of variance: the engine's raw
+mean gap to the Quran (0.189) is 1.85x the poems' gap (0.102), but the
+engine's pooled standard deviation is also 1.83x larger (0.251 vs
+0.137). The two factors cancel.
+
+The correct interpretation is two-sided:
+
+- **In absolute terms**, the matcher's CoG center lies 2.66x further
+  from Arabic prose than poetry does. It occupies a region Arabic
+  does not.
+- **In standardized terms**, the matcher's distance from prose is
+  comparable to poetry's, because the matcher also explores a wider
+  acoustic range than any human corpus.
+
+Both statements are true. The matcher is both further from human
+Arabic and more variable than human Arabic.
