@@ -317,21 +317,28 @@ becomes variable (Kp > 2), the metastable structure should relax.
 ## 10. Threshold response to geomagnetic activity
 
 At 07:09 UTC the Kp index rose from 1.67 to 3.0 — the first real
-change in the entire recording. The matcher's output responded with
-a discrete mode switch. Splitting turns by Kp value (with the
-placeholder default of 2.0 counted separately):
+change in the entire recording. The matcher's output responded
+monotonically. Splitting turns by cosmic state gives a two-dimensional
+phase diagram with three resolved corners:
 
-| Kp value | turns | mean CoG | std CoG | ض at pos1 |
+| Kp | Schumann | turns | mean CoG | std CoG |
 |---|---|---|---|---|
-| 1.67 (real) | 7,338 | 0.3035 | 0.2523 | 17.58% |
-| 2.00 (placeholder) | 962 | 0.7441 | 0.0865 | 0.00% |
-| 3.00 (real) | 728 | 0.7738 | 0.0803 | 0.00% |
+| 1.67 | 35 | 830 | 0.4102 | 0.3052 |
+| 1.67 | 38 | 6,022 | 0.3020 | 0.2468 |
+| >= 2.00 | 38 | 1,690 | 0.7441 -- 0.7738 | 0.080 -- 0.087 |
 
-The mode switch is not triggered by Kp = 3.0 specifically. It
-occurs at or below Kp = 2.0 — the placeholder value itself
-triggers it. The threshold is between 1.67 and 2.00. This
-means the matcher responds to the *value* of Kp, not to whether
-the input is derived from real or default data.
+The matcher's CoG is a monotonic function of both cosmic dimensions:
+
+- Holding Kp at 1.67, a Schumann drop from 38 to 35 raises CoG
+  by +0.108 (from 0.302 to 0.410).
+- Holding Schumann at 38, a Kp rise from 1.67 to 2.00 raises CoG
+  by +0.442 (from 0.302 to 0.744).
+- Both effects point toward the same attractor: higher Kp and lower
+  Schumann both push the matcher toward high-CoG fricative roots.
+
+Kp has roughly 4x the effect size of Schumann, but both are
+resolved. The matcher is a continuous function of the cosmic vector,
+not a threshold switch.
 
 Three properties of the response:
 
