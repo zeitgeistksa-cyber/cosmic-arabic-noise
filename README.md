@@ -321,11 +321,18 @@ change in the entire recording. The matcher's output responded
 monotonically. Splitting turns by cosmic state gives a two-dimensional
 phase diagram with three resolved corners:
 
-| Kp | Schumann | turns | mean CoG | std CoG |
-|---|---|---|---|---|
-| 1.67 | 35 | 830 | 0.4102 | 0.3052 |
-| 1.67 | 38 | 6,022 | 0.3020 | 0.2468 |
-| >= 2.00 | 38 | 1,690 | 0.7441 -- 0.7738 | 0.080 -- 0.087 |
+| Kp | Schumann | turns | mean CoG | std CoG | ض@pos1 |
+|---|---|---|---|---|---|
+| 1.67 | 35 | 830 | 0.4102 | 0.3052 | 10.48% |
+| 1.67 | 38 | 6,022 | 0.3020 | 0.2468 | 19.61% |
+| >= 2.00 | 38 | 1,690 | 0.7441 -- 0.7738 | 0.080 -- 0.087 | 0.00% |
+
+Every observation in the project reduces to one variable: the position
+of the matcher's preferred CoG on a single axis. Higher Kp pushes the
+attractor toward high CoG; higher Schumann pulls it toward low CoG.
+The two effects add. The downstream enrichment of ض is not a separate
+finding -- ض has CoG 0.38, so it is enriched when the attractor sits
+below that value and excluded when the attractor sits above it.
 
 The matcher's CoG is a monotonic function of both cosmic dimensions:
 
