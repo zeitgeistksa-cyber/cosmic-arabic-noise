@@ -18,15 +18,35 @@ Every ~4.6 seconds:
 
 ## Findings (all controlled)
 
-### 1. Cosmic state correlates with acoustic features
-| correlation | r | null baseline |
-|---|---|---|
-| schumann <-> manner_avg | -0.458 | +0.017 |
-| wind <-> manner_avg | -0.396 | - |
-| kp <-> voice_count | +0.284 | - |
-| kp <-> emph_count | -0.276 | - |
+**Note on cosmic dependence.** Earlier versions of this README claimed
+that live cosmic state (Schumann, Kp, solar wind) correlates with
+phoneme features at r = -0.46. That claim did not survive longer
+sampling. The cosmic vector has been nearly constant across all
+windows collected (Kp std = 0, schumann std = 1.4), and the apparent
+correlations shrink toward zero as more windows accumulate. The
+findings below are those that survive the extended run: they are
+properties of the matcher's geometry, tested against fixed corpora,
+and independent of any time-series correlation with space weather.
 
-Null test: 5 runs of random cosmic x random roots -> |r| < 0.05 in all.
+
+### 1. The acoustic attractor is stable over time
+
+The matcher picks roots from a stable acoustic region across every
+30-minute window. The region does not drift and does not depend on
+cosmic variability, which is itself nearly constant on the timescales
+sampled:
+
+| cosmic dim | range over 20 windows | std |
+|---|---|---|
+| schumann | 35 -- 38 | 1.43 |
+| kp | 1.67 -- 1.67 | 0.00 |
+| wind | 304 -- 329 | 6.09 |
+
+Because the cosmic vector barely moves, correlations between cosmic
+state and phoneme features computed on short windows are dominated by
+autocorrelation in the sequential data. When the window count grows,
+the apparent correlations shrink toward zero. They are not reported
+here as findings.
 
 ### 2. Position asymmetry is real
 Root-initial emphatics: 15x over source frequency.
@@ -67,7 +87,7 @@ Analysis:
 ## Live data
 SunGeo.net, NOAA SWPC, NASA DONKI. Built with Termux on Android.
 
-## 5. Real Arabic poetry avoids the cosmic attractor
+## 5. Real Arabic poetry avoids the matcher attractor
 
 Four poems (Imru' al-Qais, Al-Mutanabbi, Nizar Qabbani, Mahmoud
 Darwish) were root-extracted and tested against the current cosmic
@@ -81,11 +101,11 @@ strategies:
 | Middle | 19 | **-2.43** |
 
 All significant at p<0.05. Real Arabic poetry systematically scores
-*below* random roots against the cosmic acoustic vector. The poem's
+*below* random roots against the matcher acoustic vector. The poem's
 noise center-of-gravity is 26% lower than the corpus mean -- poetry
 avoids the fricative region the engine's attractor prefers.
 
-Combined with finding #4, this establishes: **the cosmic selector
+Combined with finding #4, this establishes: **the matcher
 picks an acoustic region that real Arabic systematically avoids**,
 across both corpus frequency and classical/modern poetry.
 
@@ -93,7 +113,7 @@ across both corpus frequency and classical/modern poetry.
 
 Full-text analysis of the Quran (6236 ayah lines,
 31660 root instances, 2302
-distinct roots) against the same cosmic attractor:
+distinct roots) against the same matcher attractor:
 
 | Metric | Value |
 |---|---|
