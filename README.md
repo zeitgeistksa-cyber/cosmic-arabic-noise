@@ -88,3 +88,25 @@ avoids the fricative region the engine's attractor prefers.
 Combined with finding #4, this establishes: **the cosmic selector
 picks an acoustic region that real Arabic systematically avoids**,
 across both corpus frequency and classical/modern poetry.
+
+## 6. The Quran as a large corpus test
+
+Full-text analysis of the Quran (6236 ayah lines,
+31660 root instances, 2302
+distinct roots) against the same cosmic attractor:
+
+| Metric | Value |
+|---|---|
+| z-score vs random | -55.084 |
+| Emphatic at pos1 | 2.09% |
+| Emphatic at pos3 | 1.94% |
+| Ratio pos1/pos3 | 1.08 |
+| F1 / F2 / F3 / CoG | 0.452 / 1.350 / 2.462 / 0.163 |
+
+Comparison with earlier results:
+
+| Corpus | n | z-score | Emph pos1 |
+|---|---|---|---|
+| Quran | 31660 | -55.08 | 2.09% |
+| Poems (combined) | 19 | -2.43 | 0.00% |
+| Engine attractor | 6150 | -- | 27.50% |
