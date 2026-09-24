@@ -16,13 +16,26 @@ GAP_DUR = 0.15      # silence between roots
 
 # ---------------- The Poem ----------------
 # Opening of Imru' al-Qais's Mu'allaqa — the most famous line in Arabic poetry.
-POEM_TITLE = "قفا نبك — Imru' al-Qais, Mu'allaqa"
-POEM_LINES = [
-    "قفا نبك من ذكرى حبيب ومنزل",
-    "بسقط اللوى بين الدخول فحومل",
-    "فتوضح فالمقراة لم يعف رسمها",
-    "لما نسجتها من جنوب وشمأل",
-]
+import argparse
+import json as _json
+
+def _load_poem_args():
+    p = argparse.ArgumentParser()
+    p.add_argument("--title", required=True, help="Poem title")
+    p.add_argument("--lines-file", required=True,
+                   help="Text file with one poem line per line")
+    p.add_argument("--out", required=True, help="Output WAV path")
+    p.add_argument("--roots-out", required=True,
+                   help="Output roots JSON path")
+    return p.parse_args()
+
+_args = _load_poem_args()
+POEM_TITLE = _args.title
+POEM_LINES = [ln.strip() for ln in
+              Path(_args.lines_file).read_text(encoding="utf-8").splitlines()
+              if ln.strip()]
+OUT_WAV = Path(_args.out)
+OUT_ROOTS = Path(_args.roots_out)
 
 # ---------------- Synthesis ----------------
 def char(c):
@@ -127,7 +140,7 @@ def main():
     stereo = np.stack([left, right], axis=1)
 
     int16 = (np.clip(stereo, -1.0, 1.0) * 32767).astype(np.int16)
-    out = Path("poem_muallaqa.wav")
+    out = OUT_WAV
     with wave.open(str(out), "w") as wf:
         wf.setnchannels(2)
         wf.setsampwidth(2)
@@ -140,7 +153,7 @@ def main():
     import json
     seq = [{"word": w, "root": r, "line": i}
            for i, (w, r) in enumerate(timeline)]
-    Path("poem_roots.json").write_text(
+    OUT_ROOTS.write_text(
         json.dumps({"title": POEM_TITLE, "sequence": seq},
                    ensure_ascii=False, indent=2))
     print(f">> wrote poem_roots.json")

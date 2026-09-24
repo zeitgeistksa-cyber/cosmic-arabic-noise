@@ -1,0 +1,35 @@
+{
+  "title": "Mahmoud Darwish",
+  "sequence": [
+    {
+      "word": "سجل",
+      "root": "سجل",
+      "line": 0
+    },
+    {
+      "word": "أنا",
+      "root": "انا",
+      "line": 1
+    },
+    {
+      "word": "ألف",
+      "root": "الف",
+      "line": 2
+    },
+    {
+      "word": "سيأتي",
+      "root": "ستي",
+      "line": 3
+    },
+    {
+      "word": "بعد",
+      "root": "بعد",
+      "line": 4
+    },
+    {
+      "word": "صيف",
+      "root": "صيف",
+      "line": 5
+    }
+  ]
+}
