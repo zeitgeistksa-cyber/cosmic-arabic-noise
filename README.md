@@ -140,7 +140,7 @@ The engine's triads are not tuned to any scale. Yet they sound consonant. Analys
 | Mean roughness | 0.0000 | Tones do not beat — no sensory dissonance |
 | Missing fundamental fit | 100% | Triads synthesize a phantom bass note |
 | Odd harmonic fraction | 100% | Wavefolder is odd-symmetric — clarinet-like timbre |
-| AM power in 0.5-4 Hz | 70.8% | Output sits in the universal acoustic communication band |
+| Dominant envelope period | 4.64 s | Turn length, not an LFO (see below) |
 
 Reference roughness values (same analysis method):
 
@@ -176,7 +176,28 @@ Each produces a specific property. Together, they produce a sound that sits at t
 
 ### Amplitude modulation
 
-70% of the amplitude-envelope power concentrates in the 0.5-4 Hz band — the range every acoustic animal uses for communication. This is by design: the envelopes span seconds, the roots change every 9.2 seconds, and the 2 Hz LFO modulates the letter channels. The output lives in the same band as speech, whale song, cricket chirps, and human music.
+Autocorrelation of the amplitude envelope on the rebalanced engine
+(`active_patched.wav`, 171 s):
+
+| lag | period | strength |
+|---|---|---|
+| dominant | 4.64 s | +0.970 |
+| secondary | 1.62 s | +0.285 |
+| at 4.0 Hz | 0.25 s | +0.547 |
+| at 2.0 Hz | 0.50 s | -0.064 |
+
+The dominant periodicity is the turn length: 4.64 s equals 100 chunks
+of 2048 samples at 44100 Hz, matching the current `turn_chunks = 100`
+setting. The secondary peak at 1.62 s matches the syllable spacing
+(three syllable centers per turn, roughly evenly distributed).
+
+The 4 Hz band shows a medium amplitude-modulation component
+(r=+0.55); 2 Hz shows no peak. An earlier version of this README
+claimed 70% of AM power concentrated in the 0.5-4 Hz "universal
+communication band". That measurement was taken on the unpatched mix
+and is not reproduced on the rebalanced engine. On the current
+configuration the dominant temporal signature is the turn envelope
+itself, not the LFO.
 
 ## 8. Three-way acoustic comparison — engine, poetry, Quran
 
