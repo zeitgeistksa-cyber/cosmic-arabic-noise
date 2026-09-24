@@ -12,40 +12,40 @@ A self-evolving neural noise engine driven by Arabic phoneme acoustics, live cos
 - .vercel/project.json  (124B)
 - .vercelignore  (144B)
 - README.md  (1517B)
-- agent/context.md  (11588B)
-- agent/explain.md  (1799B)
-- agent/log.jsonl  (2378B)
+- agent/context.md  (11383B)
+- agent/explain.md  (2290B)
+- agent/log.jsonl  (2959B)
 - agent/nohup.log  (7625B)
-- agent/plan.md  (7042B)
-- agent/suggestions.md  (3906B)
-- agent/tasks.md  (3899B)
+- agent/plan.md  (4847B)
+- agent/suggestions.md  (4098B)
+- agent/tasks.md  (4091B)
 - agent_orchestrator.py  (17339B)
+- analyze_cluster.py  (4678B)
 - arabic_noise_engine.py  (12589B)
 - autonomous_dev.py  (4560B)
-- cosmic_data.py  (3912B)
+- bz_fallback.py  (1517B)
+- capture_per_root.py  (922B)
+- compare_regimes.py  (898B)
+- correlation_control.py  (1515B)
+- cosmic_data.py  (5252B)
 - cosmic_driver.py  (1937B)
-- cosmic_semantics.py  (1901B)
+- cosmic_semantics.py  (1525B)
 - dashboard.sh  (1331B)
-- dialogue_engine.py  (12247B)
+- dialogue_engine.py  (14155B)
+- english_phoneme_table.py  (1685B)
+- experiments/cosmic_semantics_v1_formula.py  (1901B)
+- experiments/findings/correlation_control.txt  (548B)
+- experiments/findings/english_attractor.txt  (1025B)
+- experiments/findings/final_english.txt  (1025B)
+- experiments/findings/final_patterns.txt  (4159B)
+- experiments/findings/position_control.txt  (659B)
+- experiments/patterns/20260924_032636.txt  (4159B)
+- experiments/rebuild1/result_20260924_031721.txt  (2020B)
+- experiments/root_semantics_v1_formula.py  (2246B)
+- experiments/v1_formula/cosmic_semantics.py  (1901B)
+- experiments/v1_formula/dialogue_engine.py  (12247B)
+- experiments/v1_formula/root_semantics.py  (2246B)
 - export.sh  (1171B)
-- export_snapshot.py  (2136B)
-- extract_roots.py  (1644B)
-- import.sh  (628B)
-- index.html  (2663B)
-- keep_running.sh  (176B)
-- main  (0B)
-- patch_cosmic_engine.py  (2018B)
-- phoneme_grammar.py  (2614B)
-- phoneme_table.py  (1611B)
-- proposals/proposal_20260924_002539.md  (468B)
-- proposals/proposal_20260924_003219.md  (467B)
-- proposals/proposal_20260924_003419.md  (467B)
-- proposals/proposal_20260924_003619.md  (467B)
-- proposals/proposal_20260924_003819.md  (467B)
-- proposals/proposal_20260924_004019.md  (467B)
-- proposals/proposal_20260924_004219.md  (467B)
-- proposals/proposal_20260924_004412.md  (466B)
-- proposals/proposal_20260924_004421.md  (465B)
 
 ## Source Code
 
@@ -131,30 +131,42 @@ PHONEME_LETTERS = se
 ### root_semantics.py
 ```python
 #!/usr/bin/env python3
-"""Map each Arabic root to an 8-dim semantic vector derived from its phonemes."""
+"""
+Root Semantics — Pure Acoustic Version (v2)
+============================================
+No formulas. No named axes. Every dimension is a raw number taken
+directly from the Arabic phoneme table.
+
+Each root becomes a 4-dimensional vector:
+    [mean_F1, mean_F2, mean_F3, mean_CoG]
+
+where the mean is taken across the 3 letters of the root.
+This is the simplest possible acoustic representation.
+If a cosmic state prefers specific roots, it must prefer them
+on the basis of these raw numbers alone — no voice formula, no
+manner penalty, nothing but formant and noise measurements.
+"""
 import numpy as np
 from phoneme_table import PHONEMES
-from phoneme_grammar import MAKHRAJ, VOICED, EMPHATIC, MANNER
 
-def letter_semantic(letter):
-    """Per-letter contribution to the 8 cosmic semantic axes."""
+
+def letter_vector(letter):
+    """Return the 4 raw acoustic values for one letter. No transformation."""
     if letter not in PHONEMES:
-        return np.zeros(8)
+        return np.zeros(4, dtype=np.float64)
     F1, F2, F3, CoG = PHONEMES[letter]
-    back = 1.0 - MAKHRAJ.get(letter, 0.5)               # 1 = deep, 0 = front
-    voice = 1.0 if letter in VOICED else 0.0
-    emph = 1.0 if letter in EMPHATIC else 0.0
-    manner = MANNER.get(letter, 0.5)
+    return np.array([F1, F2, F3, CoG], dtype=np.float64)
 
-    # 8 semantic axes
-    intensity   = 0.5 * emph + 0.5 * CoG                 # fricatives hiss
-    coherence   = voice * (1.0 - manner)                 # stops are crisp
-    expansion   = back                                   # deep = outward
-    contraction = manner * (1.0 - back)                  # frontal fricatives
-    harmony     = voice * (1.0 - abs(F2 - 1.5))          # centered formant
-    turbulence  = CoG                                    # high CoG = hiss
-    density     = 1.0 - manner                           # stops feel dense
-    luminosity  = F3 / 3.0   
+
+def root_semantic(root):
+    """Return the 4-dim raw acoustic vector for a 3-letter root."""
+    if len(root) != 3:
+        return np.zeros(4, dtype=np.float64)
+    vs = [letter_vector(c) for c in root]
+    return np.mean(vs, axis=0)
+
+
+def precompute(root
 ... (truncated)
 
 ```
@@ -162,36 +174,48 @@ def letter_semantic(letter):
 ### cosmic_semantics.py
 ```python
 #!/usr/bin/env python3
+"""
+Cosmic Semantics — Raw Version (v2)
+===================================
+Four dimensions, each a raw live measurement scaled to [0,1]:
+
+    [0] schumann_score / 100       — geomagnetic activity, 0-100
+    [1] kp_value / 9               — planetary K-index, 0-9
+    [2] (wind_speed - 200) / 600   — solar wind km/s, normalized
+    [3] (bz + 20) / 40             — southward IMF, normalized
+
+No named axes like "coherence" or "harmony". Just the numbers.
+If a cosmic state is going to prefer specific roots, it must do so
+through these 4 raw signals.
+"""
 import numpy as np
 from cosmic_driver import CosmicDriver
+
 _history = []
 _HISTORY_LEN = 20
-def _norm(x, lo, hi):
-    if hi <= lo: return 0.5
-    return max(0.0, min(1.0, (x - lo) / (hi - lo)))
-def _safe(x, default): return default if x is None else x
+
+
+def _clamp01(x):
+    return float(max(0.0, min(1.0, x)))
+
+
 def cosmic_semantic_vector(driver=None):
-    if driver is None: driver = CosmicDriver(poll_interval=0)
+    """Return a 4-dim raw vector plus the raw state dict."""
+    if driver is None:
+        driver = CosmicDriver(poll_interval=0)
     s = driver.poll()
-    sch = _safe(s.get("schumann_score"), 50)
-    kp = _safe(s.get("kp_value"), 2.0)
-    wind = _safe(s.get("wind_speed"), 400)
-    bz = _safe(s.get("bz"), 0.0)
-    intensity   = _norm(sch, 0, 100)
-    coherence   = 1.0 - _norm(kp, 0, 9)
-    expansion   = _norm(wind, 250, 800)
-    contraction = _norm(-bz, 0, 20)
-    harmony     = 1.0 - abs(_norm(sch, 0, 100) - 0.5) * 2
-    turbulence  = _norm(kp, 0, 9)
-    density     = _norm(wind**2 / 1000, 60, 640)
-    luminosity  = _norm(kp, 0, 9) ** 2
-    _history.append((sch, kp, wind, bz))
-    if len(_history) > _HISTORY_LEN: _history.pop(0)
-    if len(_history) >= 5:
-        h = np.array(_history[-5:], dtype=np.float64)
-        d_int = float(np.tanh((h[-1,0]-h[0,0]) / 20.0))
-        d_turb = float(np.tanh((h[-1,1]-h[0,1]) / 3.0))
-        d_exp = float(
+
+    sch = s.get("schumann_score") or 50
+    kp = s.get("kp_value") or 2.0
+    wind = s.get("wind_speed") or 400
+    bz = s.get("bz")
+    if bz is None:
+        bz = 0.0
+
+    v = [
+        _clamp01(sch / 100.0),
+        _clamp01(kp / 9.0),
+        _clamp01((wind - 200.0) / 6
 ... (truncated)
 
 ```
@@ -264,65 +288,13 @@ def rhythm_score(freq_hz):
 ```json
 
 {
-  "session": "session_20260924_014738_dialogue.jsonl",
-  "turns": 1263,
-  "decodes": 1263,
-  "distinct_roots": 42,
-  "top_roots": [
-    [
-      "ضدد",
-      335
-    ],
-    [
-      "زبد",
-      205
-    ],
-    [
-      "ذبب",
-      126
-    ],
-    [
-      "ردد",
-      77
-    ],
-    [
-      "دبر",
-      51
-    ],
-    [
-      "برد",
-      51
-    ],
-    [
-      "بدر",
-      46
-    ],
-    [
-      "درر",
-      36
-    ],
-    [
-      "ندد",
-      33
-    ],
-    [
-      "برر",
-      30
-    ]
-  ],
-  "last_cosmic": {
-    "schumann_score": 35,
-    "kp_value": 1.67,
-    "wind_speed": 304,
-    "bz": null
-  },
-  "last_5_roots": [
-    "ندد",
-    "لبد",
-    "برد",
-    "بدر",
-    "برد"
-  ]
+  "session": "session_20260924_032934_dialogue.jsonl",
+  "turns": 0,
+  "decodes": 0,
+  "distinct_roots": 0,
+  "top_roots": [],
+  "last_cosmic": null,
+  "last_5_roots": []
 }
 
 ```
@@ -330,17 +302,21 @@ def rhythm_score(freq_hz):
 ## Git State
 ```
 
+e101f0d Final pattern results with real Bz data
+21e9eeb English attractor control result
+5275c8a Corpus validation + controls + English table
+57db359 Controls + corpus validation: engine has anti-Arabic phonetic attractor
+f6b541e Position + correlation control tests
+a35e2ba New sound: per-letter envelopes; new analysis: multi-pattern finder
+d3815c7 Rebuild 1: pure acoustic vectors, raw cosmic, cluster test
 f78e4dc P0: fix cosine clipping in root_semantics
-99a9be2 Move viewer files to repo root for GitHub Pages
-250e964 Force refresh for GitHub Pages dropdown
-6ee72e8 snapshot: 2026-09-23T23:38:11Z
-af98938 Point README at GitHub Pages viewer
-30e74ce Remove vercel.json — using GitHub Pages instead
-8dfc912 Tell Vercel to serve /public
-bf3552b Add vercelignore to trim deploy size
 ---
 M agent/log.jsonl
+ M cosmic_data.py
  M snapshot.json
+?? bz_fallback.py
+?? patch_bz.py
+?? patch_bz_v2.py
 
 ```
 
