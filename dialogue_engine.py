@@ -65,40 +65,6 @@ def acoustic_fingerprint(audio_chunk):
     return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
 
 # Keep old name for compatibility
-def acoustic_fingerprint(audio_chunk):
-    """Report what the sound IS: band, centroid, rolloff, roughness."""
-    mono = audio_chunk[:, 0].astype(np.float32)
-    spec = np.abs(np.fft.rfft(mono)) + 1e-9
-    freqs = np.fft.rfftfreq(len(mono), 1/SR)
-    centroid = float(np.sum(freqs * spec) / np.sum(spec))
-    cum = np.cumsum(spec) / np.sum(spec)
-    rolloff = float(freqs[np.searchsorted(cum, 0.85)])
-    env = np.abs(mono)
-    rough = float(np.std(env) / (np.mean(env) + 1e-9))
-    if centroid < 400:   band = "SUB"
-    elif centroid < 1500: band = "LOW"
-    elif centroid < 4000: band = "MID"
-    elif centroid < 8000: band = "HIGH"
-    else:                 band = "AIR"
-    return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
-
-def acoustic_fingerprint(audio_chunk):
-    """Report what the sound IS: band, centroid, rolloff, roughness."""
-    mono = audio_chunk[:, 0].astype(np.float32)
-    spec = np.abs(np.fft.rfft(mono)) + 1e-9
-    freqs = np.fft.rfftfreq(len(mono), 1/SR)
-    centroid = float(np.sum(freqs * spec) / np.sum(spec))
-    cum = np.cumsum(spec) / np.sum(spec)
-    rolloff = float(freqs[np.searchsorted(cum, 0.85)])
-    env = np.abs(mono)
-    rough = float(np.std(env) / (np.mean(env) + 1e-9))
-    if centroid < 400:   band = "SUB"
-    elif centroid < 1500: band = "LOW"
-    elif centroid < 4000: band = "MID"
-    elif centroid < 8000: band = "HIGH"
-    else:                 band = "AIR"
-    return f"{band}|c={centroid:.0f}Hz|r={rolloff:.0f}Hz|rough={rough:.2f}"
-
 def decode_output(audio_chunk):
     return acoustic_fingerprint(audio_chunk)
 
