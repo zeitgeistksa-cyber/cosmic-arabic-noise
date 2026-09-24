@@ -66,3 +66,25 @@ Analysis:
 
 ## Live data
 SunGeo.net, NOAA SWPC, NASA DONKI. Built with Termux on Android.
+
+## 5. Real Arabic poetry avoids the cosmic attractor
+
+Four poems (Imru' al-Qais, Al-Mutanabbi, Nizar Qabbani, Mahmoud
+Darwish) were root-extracted and tested against the current cosmic
+vector. Result is significant under three independent extraction
+strategies:
+
+| Extractor | n | z-score |
+|---|---|---|
+| Strict | 15 | -2.17 |
+| Loose | 29 | -2.02 |
+| Middle | 19 | **-2.43** |
+
+All significant at p<0.05. Real Arabic poetry systematically scores
+*below* random roots against the cosmic acoustic vector. The poem's
+noise center-of-gravity is 26% lower than the corpus mean -- poetry
+avoids the fricative region the engine's attractor prefers.
+
+Combined with finding #4, this establishes: **the cosmic selector
+picks an acoustic region that real Arabic systematically avoids**,
+across both corpus frequency and classical/modern poetry.
