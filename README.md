@@ -233,3 +233,49 @@ The correct interpretation is two-sided:
 
 Both statements are true. The matcher is both further from human
 Arabic and more variable than human Arabic.
+
+## 9. How letters merge into words — phonotactic analysis
+
+Three structural rules were measured across the 1,583 roots in
+the source lexicon:
+
+### Rule A — Medial sonority
+
+The middle letter of a triliteral root is preferentially a sonorant:
+
+| position 2 letter | share | class |
+|---|---|---|
+| ر | 9.35% | alveolar trill |
+| و | 8.21% | labiovelar glide |
+| ل | 7.08% | lateral |
+| م | 6.51% | nasal |
+| ب | 6.19% | bilabial stop |
+
+The top four are all sonorants, matching the Sonority Sequencing
+Principle documented in Arabic phonology (McCarthy 1979, Watson 2002).
+
+### Rule B — Asymmetric OCP
+
+Adjacent identical consonants:
+
+| boundary | observed | random expectation | ratio |
+|---|---|---|---|
+| 1st-2nd | 1.14% | 3.57% | 0.32x |
+| 2nd-3rd | 9.67% | 3.57% | 2.71x |
+
+Arabic forbids initial gemination and permits final gemination. The
+pattern is not symmetric.
+
+### The engine's behavior
+
+The engine's top roots (صفف, زفف, حفف) follow Rule B (they exploit
+permitted gemination at 2-3) but violate Rule A (their middle letter
+is the fricative ف, not a sonorant). This is a distinct anti-corpus
+behavior consistent with the CoG finding from Section 8.
+
+### Articulatory transitions (null result)
+
+Real roots and random triples have nearly identical mean articulatory
+transition cost (1.224 vs 1.231, a 0.65% difference). Arabic does not,
+at this level of measurement, prefer smoother or rougher transitions
+between consonants than random arrangement.
