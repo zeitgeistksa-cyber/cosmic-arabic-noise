@@ -15,46 +15,44 @@ def normalize_alif(s):
     return "".join("ا" if c in ALIF_FORMS else c for c in s)
 
 def triliteral_skeleton(word):
-    """Extract a 3-letter root by trying multiple reductions.
-    
-    Strategy: strip diacritics, normalize alif, remove common prefixes,
-    then try several candidates and pick the first that yields 3 letters.
-    """
+    """Middle-strategy extraction: strip only unambiguous prefixes."""
     w = strip_diacritics(normalize_alif(word))
     w = "".join(c for c in w if c in PHONEME_LETTERS)
     if len(w) < 3:
         return None
-    
-    # Try direct 3-letter
     if len(w) == 3:
         return w
-    
-    # Try stripping common prefixes (ال، و، ف، ب، ل، ك)
-    PREFIXES = ["ال", "و", "ف", "ب", "ل", "ك", "م", "ت", "ن", "ي", "س"]
-    for pre in PREFIXES:
-        if w.startswith(pre) and len(w) - len(pre) >= 3:
-            candidate = w[len(pre):]
-            if len(candidate) == 3:
-                return candidate
-            # Also try after prefix + internal weak stripping
-            if len(candidate) > 3:
-                first, middle, last = candidate[0], candidate[1:-1], candidate[-1]
-                middle_clean = "".join(c for c in middle if c not in WEAK)
-                if len(first + middle_clean + last) == 3:
-                    return first + middle_clean + last
-    
-    # Fallback: strip internal weak letters from anywhere
+
+    # Strip ONLY these unambiguous prefixes, and only once each:
+    # ال (definite article), و/ف (conjunctions) when followed by 3+ letters
+    prefixes = ["ال", "و", "ف"]
+    for pre in prefixes:
+        if w.startswith(pre) and len(w) - len(pre) == 3:
+            return w[len(pre):]
+
+    # If exactly 4 letters and 2nd or 3rd is a weak letter (long vowel), drop it
+    if len(w) == 4:
+        for i in (1, 2):
+            if w[i] in WEAK:
+                candidate = w[:i] + w[i+1:]
+                return candidate  # now exactly 3 letters
+
+    # If 5+ letters, drop the first letter if it's و/ف/ب/ل/ك (prefix)
+    if len(w) >= 5 and w[0] in "وفبلك":
+        w = w[1:]
+
+    # Now strictly require 3 letters
+    if len(w) == 3:
+        return w
+
+    # Strip internal weak letters as final fallback
     if len(w) >= 4:
         first, middle, last = w[0], w[1:-1], w[-1]
         middle_clean = "".join(c for c in middle if c not in WEAK)
         candidate = first + middle_clean + last
         if len(candidate) == 3:
             return candidate
-    
-    # Last resort: first-middle-last from a 4+ letter word
-    if len(w) >= 4:
-        return w[0] + w[len(w)//2] + w[-1]
-    
+
     return None
 
 def main():

@@ -110,3 +110,50 @@ Comparison with earlier results:
 | Quran | 31660 | -55.08 | 2.09% |
 | Poems (combined) | 19 | -2.43 | 0.00% |
 | Engine attractor | 6150 | -- | 27.50% |
+
+## 7. Why the sound is pleasant — acoustic analysis
+
+The engine's triads are not tuned to any scale. Yet they sound consonant. Analysis with Plomp-Levelt roughness, harmonic decomposition, and amplitude-modulation spectroscopy shows why:
+
+| Property | Value | Meaning |
+|---|---|---|
+| Mean roughness | 0.0000 | Tones do not beat — no sensory dissonance |
+| Missing fundamental fit | 100% | Triads synthesize a phantom bass note |
+| Odd harmonic fraction | 100% | Wavefolder is odd-symmetric — clarinet-like timbre |
+| AM power in 0.5-4 Hz | 70.8% | Output sits in the universal acoustic communication band |
+
+Reference roughness values (same analysis method):
+
+| Interval | Ratio | Roughness |
+|---|---|---|
+| Octave | 2.00 | 0.0007 |
+| Fifth | 1.50 | 0.0238 |
+| Major third | 1.25 | 0.1119 |
+| Whole tone | 1.125 | 0.1783 |
+| Semitone | 1.06 | 0.1581 |
+
+The engine's triads score below every familiar Western interval. That happens because the three tones are separated by hundreds of hertz — far enough that no two of them fall within the same critical band, so beating is impossible.
+
+### The tuning system
+
+The interval ratios are not musical in the classical sense:
+
+- f2/f1 is approximately 5.7455, best rational approx 178/31 — irrational
+- f3/f1 is approximately 18.6591, best rational approx 597/32 — irrational
+- f3/f2 is approximately 3.2476, best rational approx 13/4 — familiar
+
+The bottom-to-middle and bottom-to-top intervals have no small-integer relationship. The ear cannot file them as any known chord. But the middle-to-top interval, 13/4, is close to two octaves plus a major third — a relation the auditory system can parse.
+
+The result is a novel-but-anchored tuning system: two unfamiliar intervals supported by one recognizable one. This is the narrow band between too-consonant (boring) and too-dissonant (noise) that the ear perceives as interesting harmony.
+
+The pleasantness is not a design goal. It emerges from three mathematical choices that were made for other reasons:
+
+1. Prime bases 2, 3, 5 in the logarithmic triad mapping
+2. Divisors 7, 9, 11 (irrational spacing)
+3. Odd-symmetric wavefolder
+
+Each produces a specific property. Together, they produce a sound that sits at the threshold of the familiar and the strange.
+
+### Amplitude modulation
+
+70% of the amplitude-envelope power concentrates in the 0.5-4 Hz band — the range every acoustic animal uses for communication. This is by design: the envelopes span seconds, the roots change every 9.2 seconds, and the 2 Hz LFO modulates the letter channels. The output lives in the same band as speech, whale song, cricket chirps, and human music.

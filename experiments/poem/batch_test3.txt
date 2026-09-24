@@ -1,0 +1,6 @@
+  Imru' al-Qais — Mu'allaqa       n=  7  mean=0.4753  z=-2.407
+  Al-Mutanabbi                    n=  6  mean=0.4847  z=-1.639
+  Mahmoud Darwish                 n=  6  mean=0.5093  z=-0.091
+
+  COMBINED  n=19  mean=0.4890  z=-2.433
+  ** Significant at p<0.05 **

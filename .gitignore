@@ -12,3 +12,30 @@ proposals/
 cosmic_ai_share_*.tar.gz
 manifest.json
 .vercel
+
+# Audio captures (large, local only)
+*.raw
+*.wav
+
+# Channel runtime
+channel_log.jsonl
+channel_state.json
+channel.err
+
+# Test artifacts
+test.raw
+test.err
+capture.raw
+engine_error.log
+
+# Books (redistributed separately)
+books/
+
+# One-off scripts (keep them locally, not in repo)
+patch_bz.py
+patch_bz_v2.py
+bz_fallback.py
+play_poem_2.py
+play_poem_tmp.py
+run_poem.py
+test_triad.py

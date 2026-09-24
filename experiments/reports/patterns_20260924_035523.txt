@@ -1,0 +1,105 @@
+=== 6150 turns with full data ===
+
+=== 1. Cosmic ↔ phonetic correlations ===
+      cosmic        phonetic        r     |r|
+    schumann      emph_count   +0.255   0.255  ##########
+    schumann      manner_avg   -0.458   0.458  ##################
+    schumann        c2_voice   +0.084   0.084  ###
+          kp     voice_count   +0.284   0.284  ###########
+          kp      emph_count   -0.276   0.276  ###########
+          kp      manner_avg   +0.201   0.201  ########
+          kp        c0_voice   +0.220   0.220  ########
+          kp        c1_voice   +0.250   0.250  #########
+          kp        c2_voice   +0.180   0.180  #######
+          kp          f_mean   -0.234   0.234  #########
+          kp        f_spread   -0.201   0.201  ########
+        wind      emph_count   +0.195   0.195  #######
+        wind      manner_avg   -0.396   0.396  ###############
+        wind        c2_voice   +0.097   0.097  ###
+
+  Strong correlations (|r|>0.15): 12
+    schumann ↔ emph_count:  r = +0.255
+    schumann ↔ manner_avg:  r = -0.458
+    kp ↔ voice_count:  r = +0.284
+    kp ↔ emph_count:  r = -0.276
+    kp ↔ manner_avg:  r = +0.201
+    kp ↔ c0_voice:  r = +0.220
+    kp ↔ c1_voice:  r = +0.250
+    kp ↔ c2_voice:  r = +0.180
+    kp ↔ f_mean:  r = -0.234
+    kp ↔ f_spread:  r = -0.201
+    wind ↔ emph_count:  r = +0.195
+    wind ↔ manner_avg:  r = -0.396
+
+=== 2. Letter position bias ===
+  letter    pos1    pos2    pos3   total
+       د     481    2053    3026    5560
+       ب     979    2025     927    3931
+       ر     587     887    1015    2489
+       ض    1290      58       0    1348
+       ز     944      24      84    1052
+       ط     294     490     264    1048
+       ن     401     176     326     903
+       ذ     562      41      38     641
+       ف      40     235     247     522
+       ق     121       7      71     199
+       ج     157       0      40     197
+       م      80      63      37     180
+       ص     108      27       0     135
+       ل      20      31      28      79
+       س      37      28       7      72
+       ه       0       0      20      20
+       ك      14       0       2      16
+       خ      15       0       0      15
+       ع       6       0       7      13
+       ح       6       1       5      12
+
+=== 3. Sequence structure ===
+  Identical consecutive turns: 705/6149  (11.5%)
+  Mean shared letters (consecutive): 1.25
+  Overlap distribution:
+    0 shared letters:   971  (15.8%)
+    1 shared letters:  3084  (50.2%)
+    2 shared letters:  1662  (27.0%)
+    3 shared letters:   432  (7.0%)
+
+=== 4. Triad frequency distribution ===
+  f1:  mean=  207.9  std=  149.9  range=[61, 654]
+  f2:  mean=  421.8  std=  460.9  range=[140, 2327]
+  f3:  mean= 1457.8  std= 2044.9  range=[295, 9875]
+      schumann ↔     f1:  r=+0.141
+            kp ↔     f1:  r=-0.180
+            kp ↔     f2:  r=-0.163
+            kp ↔     f3:  r=-0.207
+            kp ↔ f_mean:  r=-0.234
+          wind ↔     f1:  r=+0.103
+
+=== 5. Root distribution by Kp regime ===
+  calm      n=  486  distinct=  31  H=4.32 bits
+           top5: ['طرد', 'بطن', 'نبط', 'ربط', 'بطر']
+  active    n= 5664  distinct=  92  H=4.69 bits
+           top5: ['ضدد', 'زبد', 'ذبب', 'ردد', 'برد']
+
+=== 6. Lag analysis (does cosmic today predict tomorrow?) ===
+  schumann[t] ↔ voice_count[t+  1]:  r = +0.035  (n=6149)
+  schumann[t] ↔ voice_count[t+  5]:  r = +0.035  (n=6145)
+  schumann[t] ↔ voice_count[t+ 20]:  r = +0.035  (n=6130)
+  schumann[t] ↔ voice_count[t+100]:  r = +0.047  (n=6050)
+
+=== 7. Position asymmetry ===
+  Voiced at position 1: 5507/6150  (89.5%)
+  Voiced at position 3: 5532/6150  (90.0%)
+  Emphatic at position 1: 1692/6150  (27.5%)
+  Emphatic at position 3: 268/6150  (4.4%)
+
+============================================================
+SUMMARY — Top patterns found
+============================================================
+
+Top correlations (|r|>0.15):
+  schumann ↔ manner_avg:  r = -0.458
+  wind ↔ manner_avg:  r = -0.396
+  kp ↔ voice_count:  r = +0.284
+  kp ↔ emph_count:  r = -0.276
+  schumann ↔ emph_count:  r = +0.255
+
