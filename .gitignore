@@ -58,3 +58,29 @@ experiments/timeline.jsonl
 experiments/reports/
 *.raw
 forced_cosmic.py
+
+# Backup files
+*.bak
+*.backup
+*_backup.json
+
+# AI agent runtime
+.gemini/
+gemini_agent.log
+
+# Trainer / analysis runtime
+training_log.jsonl
+trainer_checkpoint.npz
+proposal_loop.jsonl
+pattern_analysis_*.md
+analyses/
+suggestions/
+proposals_active/
+proposals_old/
+
+# Gemini docs (keep GEMINI.md though)
+gemini_agent.sh
+
+# Reference samples (already ignored)
+real_samples/
+storms/
