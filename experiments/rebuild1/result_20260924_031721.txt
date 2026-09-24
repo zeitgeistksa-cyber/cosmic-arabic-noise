@@ -1,0 +1,61 @@
+>> 1583 roots loaded
+>> Latest cosmic snapshot: {'schumann_score': 35, 'kp_value': 1.67, 'wind_speed': 304, 'bz': None}
+>> Cosmic vector (4-dim): [0.35, 0.186, 0.173, 0.5]
+
+=== BASELINE: top-10 under current cosmic state ===
+  زفف  صفف  فزز  صصف  سفه  خفف  خسف  حفف  فسق  سقف
+
+=== ABLATION: zero one cosmic dim at a time ===
+  drop schumann    overlap= 6/10   top5=['زفف', 'فزز', 'صفف', 'جسس', 'سفه']
+  drop kp          overlap= 7/10   top5=['صفف', 'زفف', 'صصف', 'خفف', 'فظظ']
+  drop wind        overlap= 6/10   top5=['زفف', 'صفف', 'فزز', 'سفه', 'جسس']
+  drop bz          overlap= 0/10   top5=['اما', 'اذا', 'الا', 'انا', 'ايا']
+
+=== RANDOM: 500 random cosmic vectors ===
+  Most chosen under random vectors:
+    صفف  208
+    زفف  207
+    فزز  173
+    صصف  172
+    جسس  168
+    سفه  148
+    خفف  145
+    خسف  127
+    فظظ  105
+    عفف  104
+    زجج  102
+    ثجج  97
+    تفث  96
+    جثث  91
+    ستت  91
+
+=== OBSERVED: all-time telemetry top-10 ===
+    ضدد  1205
+    زبد  786
+    ذبب  516
+    ردد  268
+    طرد  202
+    برد  195
+    دبر  194
+    بدر  179
+    ندد  138
+    برر  134
+  Overlap baseline ∩ observed = 0/10
+  Overlap random-top15 ∩ observed = 0/10
+
+=== LETTER FREQUENCY (observed vs uniform) ===
+  sample sizes: observed=1500 letters, uniform=3000
+  letter    obs%   unif%   ratio
+       د   35.33    4.97    7.11  ############################
+       ب   23.80    5.77    4.13  ################
+       ر   13.67    9.00    1.52  ######
+       ض    8.07    1.80    4.48  #################
+       ز    6.53    2.10    3.11  ############
+       ن    4.53    6.10    0.74  ##
+       ذ    3.67    1.00    3.67  ##############
+       ف    1.40    4.97    0.28  #
+       ج    1.20    3.10    0.39  #
+       م    0.73    5.93    0.12  
+       ل    0.73    6.77    0.11  
+       ص    0.27    2.43    0.11  
+       خ    0.07    1.97    0.03  

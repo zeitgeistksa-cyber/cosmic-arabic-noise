@@ -167,7 +167,7 @@ class DialogueEngine:
         """Called at the start of each dialogue turn."""
         # 1) Listen to the universe
         cosmic_vec_full, raw_state = cosmic_semantic_vector(self.cosmic)
-        cosmic_vec = cosmic_vec_full  # 4-dim raw vector, matched to 4-dim root vectors
+        cosmic_vec = cosmic_vec_full[:8]  # compare only first 8 dims to root vectors
 
         # 2) Find the root whose semantics best match
         scored = [(cosine(cosmic_vec, self.root_vectors[r]), r)

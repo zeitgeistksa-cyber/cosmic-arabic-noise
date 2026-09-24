@@ -1,46 +1,55 @@
 #!/usr/bin/env python3
+"""
+Cosmic Semantics — Raw Version (v2)
+===================================
+Four dimensions, each a raw live measurement scaled to [0,1]:
+
+    [0] schumann_score / 100       — geomagnetic activity, 0-100
+    [1] kp_value / 9               — planetary K-index, 0-9
+    [2] (wind_speed - 200) / 600   — solar wind km/s, normalized
+    [3] (bz + 20) / 40             — southward IMF, normalized
+
+No named axes like "coherence" or "harmony". Just the numbers.
+If a cosmic state is going to prefer specific roots, it must do so
+through these 4 raw signals.
+"""
 import numpy as np
 from cosmic_driver import CosmicDriver
+
 _history = []
 _HISTORY_LEN = 20
-def _norm(x, lo, hi):
-    if hi <= lo: return 0.5
-    return max(0.0, min(1.0, (x - lo) / (hi - lo)))
-def _safe(x, default): return default if x is None else x
+
+
+def _clamp01(x):
+    return float(max(0.0, min(1.0, x)))
+
+
 def cosmic_semantic_vector(driver=None):
-    if driver is None: driver = CosmicDriver(poll_interval=0)
+    """Return a 4-dim raw vector plus the raw state dict."""
+    if driver is None:
+        driver = CosmicDriver(poll_interval=0)
     s = driver.poll()
-    sch = _safe(s.get("schumann_score"), 50)
-    kp = _safe(s.get("kp_value"), 2.0)
-    wind = _safe(s.get("wind_speed"), 400)
-    bz = _safe(s.get("bz"), 0.0)
-    intensity   = _norm(sch, 0, 100)
-    coherence   = 1.0 - _norm(kp, 0, 9)
-    expansion   = _norm(wind, 250, 800)
-    contraction = _norm(-bz, 0, 20)
-    harmony     = 1.0 - abs(_norm(sch, 0, 100) - 0.5) * 2
-    turbulence  = _norm(kp, 0, 9)
-    density     = _norm(wind**2 / 1000, 60, 640)
-    luminosity  = _norm(kp, 0, 9) ** 2
-    _history.append((sch, kp, wind, bz))
-    if len(_history) > _HISTORY_LEN: _history.pop(0)
-    if len(_history) >= 5:
-        h = np.array(_history[-5:], dtype=np.float64)
-        d_int = float(np.tanh((h[-1,0]-h[0,0]) / 20.0))
-        d_turb = float(np.tanh((h[-1,1]-h[0,1]) / 3.0))
-        d_exp = float(np.tanh((h[-1,2]-h[0,2]) / 100.0))
-        d_con = float(np.tanh(-(h[-1,3]-h[0,3]) / 5.0))
-    else:
-        d_int = d_turb = d_exp = d_con = 0.0
-    return [intensity, coherence, expansion, contraction,
-            harmony, turbulence, density, luminosity,
-            d_int, d_turb, d_exp, d_con], s
+
+    sch = s.get("schumann_score") or 50
+    kp = s.get("kp_value") or 2.0
+    wind = s.get("wind_speed") or 400
+    bz = s.get("bz")
+    if bz is None:
+        bz = 0.0
+
+    v = [
+        _clamp01(sch / 100.0),
+        _clamp01(kp / 9.0),
+        _clamp01((wind - 200.0) / 600.0),
+        _clamp01((bz + 20.0) / 40.0),
+    ]
+    return v, s
+
+
 if __name__ == "__main__":
     vec, raw = cosmic_semantic_vector()
-    names = ["intensity","coherence","expansion","contraction",
-             "harmony","turbulence","density","luminosity",
-             "d_int","d_turb","d_exp","d_con"]
+    names = ["schumann", "kp", "wind", "bz"]
     for n, v in zip(names, vec):
-        bar = "#" * int(abs(v) * 30)
-        sign = "+" if v >= 0 else "-"
-        print(f"{n:12s}  {sign}{abs(v):.3f}  {bar}")
+        bar = "#" * int(v * 40)
+        print(f"{n:10s}  {v:.3f}  {bar}")
+    print(f"\nraw: {raw}")

@@ -1,41 +1,41 @@
 #!/usr/bin/env python3
-"""Map each Arabic root to an 8-dim semantic vector derived from its phonemes."""
+"""
+Root Semantics — Pure Acoustic Version (v2)
+============================================
+No formulas. No named axes. Every dimension is a raw number taken
+directly from the Arabic phoneme table.
+
+Each root becomes a 4-dimensional vector:
+    [mean_F1, mean_F2, mean_F3, mean_CoG]
+
+where the mean is taken across the 3 letters of the root.
+This is the simplest possible acoustic representation.
+If a cosmic state prefers specific roots, it must prefer them
+on the basis of these raw numbers alone — no voice formula, no
+manner penalty, nothing but formant and noise measurements.
+"""
 import numpy as np
 from phoneme_table import PHONEMES
-from phoneme_grammar import MAKHRAJ, VOICED, EMPHATIC, MANNER
 
-def letter_semantic(letter):
-    """Per-letter contribution to the 8 cosmic semantic axes."""
+
+def letter_vector(letter):
+    """Return the 4 raw acoustic values for one letter. No transformation."""
     if letter not in PHONEMES:
-        return np.zeros(8)
+        return np.zeros(4, dtype=np.float64)
     F1, F2, F3, CoG = PHONEMES[letter]
-    back = 1.0 - MAKHRAJ.get(letter, 0.5)               # 1 = deep, 0 = front
-    voice = 1.0 if letter in VOICED else 0.0
-    emph = 1.0 if letter in EMPHATIC else 0.0
-    manner = MANNER.get(letter, 0.5)
+    return np.array([F1, F2, F3, CoG], dtype=np.float64)
 
-    # 8 semantic axes
-    intensity   = 0.5 * emph + 0.5 * CoG                 # fricatives hiss
-    coherence   = voice * (1.0 - manner)                 # stops are crisp
-    expansion   = back                                   # deep = outward
-    contraction = manner * (1.0 - back)                  # frontal fricatives
-    harmony     = voice * (1.0 - abs(F2 - 1.5))          # centered formant
-    turbulence  = CoG                                    # high CoG = hiss
-    density     = 1.0 - manner                           # stops feel dense
-    luminosity  = F3 / 3.0                               # bright formants
-    return np.array([intensity, coherence, expansion,
-                     contraction, harmony, turbulence,
-                     density, luminosity])
 
 def root_semantic(root):
-    """Average the 3 letters' semantic vectors."""
+    """Return the 4-dim raw acoustic vector for a 3-letter root."""
     if len(root) != 3:
-        return np.zeros(8)
-    vs = [letter_semantic(c) for c in root]
+        return np.zeros(4, dtype=np.float64)
+    vs = [letter_vector(c) for c in root]
     return np.mean(vs, axis=0)
 
+
 def precompute(roots):
-    """Return {root: vector} for a list of roots, normalized."""
+    """Return {root: unit-normalized 4-dim vector}."""
     table = {}
     for r in roots:
         v = root_semantic(r)
@@ -43,12 +43,22 @@ def precompute(roots):
         table[r] = v / n
     return table
 
+
 def cosine(a, b):
-    a = np.asarray(a, dtype=np.float64); b = np.asarray(b, dtype=np.float64)
-    na = np.linalg.norm(a) + 1e-9; nb = np.linalg.norm(b) + 1e-9
-    return float(np.dot(a, b) / (na * nb))
+    """Plain cosine similarity, clipped to [-1, 1]."""
+    a = np.asarray(a, dtype=np.float64)
+    b = np.asarray(b, dtype=np.float64)
+    if a.shape != b.shape:
+        # Truncate to the shorter length rather than crash
+        m = min(a.size, b.size)
+        a = a[:m]
+        b = b[:m]
+    na = np.linalg.norm(a) + 1e-9
+    nb = np.linalg.norm(b) + 1e-9
+    return float(np.clip(np.dot(a, b) / (na * nb), -1.0, 1.0))
+
 
 if __name__ == "__main__":
-    for r in ["ابت", "عرب", "كتب", "صبر", "نور", "صدق", "علم", "كون"]:
+    for r in ["ضدد", "زبد", "ذبب", "ردد", "بدر", "طرد", "نور", "علم"]:
         v = root_semantic(r)
-        print(f"{r}  " + " ".join(f"{x:.2f}" for x in v))
+        print(f"{r}  F1={v[0]:.2f}  F2={v[1]:.2f}  F3={v[2]:.2f}  CoG={v[3]:.2f}")
