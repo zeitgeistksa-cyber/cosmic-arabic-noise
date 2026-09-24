@@ -317,13 +317,21 @@ becomes variable (Kp > 2), the metastable structure should relax.
 ## 10. Threshold response to geomagnetic activity
 
 At 07:09 UTC the Kp index rose from 1.67 to 3.0 — the first real
-change in the entire recording. The matcher's output responded
-abruptly:
+change in the entire recording. The matcher's output responded with
+a discrete mode switch. Splitting turns by Kp value (with the
+placeholder default of 2.0 counted separately):
 
-| regime | turns | mean CoG | std CoG | ض at pos1 |
+| Kp value | turns | mean CoG | std CoG | ض at pos1 |
 |---|---|---|---|---|
-| calm (Kp = 1.67) | 7,338 | 0.3035 | 0.2523 | 17.58% |
-| active (Kp = 3.0) | 1,675 | 0.7567 | 0.0853 | 0.00% |
+| 1.67 (real) | 7,338 | 0.3035 | 0.2523 | 17.58% |
+| 2.00 (placeholder) | 962 | 0.7441 | 0.0865 | 0.00% |
+| 3.00 (real) | 728 | 0.7738 | 0.0803 | 0.00% |
+
+The mode switch is not triggered by Kp = 3.0 specifically. It
+occurs at or below Kp = 2.0 — the placeholder value itself
+triggers it. The threshold is between 1.67 and 2.00. This
+means the matcher responds to the *value* of Kp, not to whether
+the input is derived from real or default data.
 
 Three properties of the response:
 
