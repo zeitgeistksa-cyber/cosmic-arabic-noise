@@ -67,12 +67,11 @@ def scan_project():
         info["by_ext"][ext] = info["by_ext"].get(ext, 0) + 1
     return info
 
-def read_core_sources(max_bytes=8000):
+def read_core_sources(max_bytes=1200):
     """Read the important code files, capped per file."""
-    core = ["dialogue_engine.py", "phoneme_table.py", "phoneme_grammar.py",
-            "root_semantics.py", "cosmic_semantics.py", "cosmic_driver.py",
-            "cosmic_data.py", "universal_rhythm.py", "train_gen.py",
-            "autonomous_dev.py"]
+    core = ["dialogue_engine.py", "phoneme_table.py",
+            "root_semantics.py", "cosmic_semantics.py",
+            "cosmic_driver.py", "universal_rhythm.py"]
     out = {}
     for name in core:
         p = Path(name)
@@ -146,6 +145,17 @@ def proposals_digest():
 _last_call_ts = [0.0]
 _MIN_GAP_SEC = 2.5   # space requests out for free-tier rate limits
 
+def _strip_think(text):
+    """Remove <think>...</think> blocks from reasoning models."""
+    import re
+    if not text:
+        return text
+    # Remove anything between <think> and </think> (case-insensitive, multiline)
+    cleaned = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE)
+    # Also strip stray tags if unbalanced
+    cleaned = cleaned.replace("<think>", "").replace("</think>", "")
+    return cleaned.strip()
+
 def _is_rate_error(text):
     """Detect rate-limit / overload errors from any provider."""
     t = (text or "").lower()
@@ -183,7 +193,7 @@ def ask_gemini(prompt, timeout=120, max_retries=3):
                     backoff *= 2
                     continue
                 return f"!! aichat error: {err[:300]}"
-            return out
+            return _strip_think(out)
         except subprocess.TimeoutExpired:
             if attempt < max_retries:
                 print(f"    {C['yellow']}[retry {attempt}/{max_retries}] "
@@ -200,6 +210,7 @@ def ask_gemini(prompt, timeout=120, max_retries=3):
 
 # ---------- Prompt builders ----------
 def build_context(sources, telemetry, git, props, scanner):
+    """Build context with hard cap on total size to stay under token limits."""
     parts = []
     parts.append("# Project Brief\n")
     parts.append("Repository: cosmic-arabic-noise\n")
@@ -231,7 +242,12 @@ def build_context(sources, telemetry, git, props, scanner):
         for p in props:
             parts.append(f"### {p['file']}\n{p['head']}\n")
 
-    return "\n".join(parts)
+    text = "\n".join(parts)
+    # Hard cap: keep under ~6000 tokens (~24000 chars) for free-tier TPM limits
+    MAX_CHARS = 14000
+    if len(text) > MAX_CHARS:
+        text = text[:MAX_CHARS] + "\n... [context truncated to fit token limit]\n"
+    return text
 
 # ---------- Analysis pass ----------
 def analyse(cycle, context):
