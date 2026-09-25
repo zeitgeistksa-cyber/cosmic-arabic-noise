@@ -1,0 +1,115 @@
+{
+  "telem": [
+    {
+      "frame": 14050,
+      "gen": 282,
+      "entropy": 9.89556884765625,
+      "peak_hz": 0,
+      "coupling": 0.13257374367643915,
+      "cycle_amp": 0.3294839142795997,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14100,
+      "gen": 283,
+      "entropy": 10.182047843933105,
+      "peak_hz": 0,
+      "coupling": 0.11268768212497328,
+      "cycle_amp": 0.33000732234862684,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14150,
+      "gen": 284,
+      "entropy": 9.789484024047852,
+      "peak_hz": 0,
+      "coupling": 0.09578452980622729,
+      "cycle_amp": 0.3305351275129712,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14200,
+      "gen": 285,
+      "entropy": 9.821184158325195,
+      "peak_hz": 0,
+      "coupling": 0.0814168503352932,
+      "cycle_amp": 0.3310673225199367,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14250,
+      "gen": 286,
+      "entropy": 10.30301284790039,
+      "peak_hz": 0,
+      "coupling": 0.06920432278499922,
+      "cycle_amp": 0.33160390005650553,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14300,
+      "gen": 287,
+      "entropy": 10.144373893737793,
+      "peak_hz": 0,
+      "coupling": 0.058823674367249335,
+      "cycle_amp": 0.3321448527494384,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14350,
+      "gen": 288,
+      "entropy": 10.071144104003906,
+      "peak_hz": 0,
+      "coupling": 0.050000123212161934,
+      "cycle_amp": 0.3326901731653759,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14400,
+      "gen": 289,
+      "entropy": 10.196996688842773,
+      "peak_hz": 0,
+      "coupling": 0.04250010473033764,
+      "cycle_amp": 0.333239853810941,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14450,
+      "gen": 290,
+      "entropy": 9.927689552307129,
+      "peak_hz": 0,
+      "coupling": 0.036125089020786996,
+      "cycle_amp": 0.3337938871328413,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 14500,
+      "gen": 291,
+      "entropy": 9.980362892150879,
+      "peak_hz": 0,
+      "coupling": 0.030706325667668947,
+      "cycle_amp": 0.3343522655179736,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    }
+  ],
+  "total_frames": 14524
+}

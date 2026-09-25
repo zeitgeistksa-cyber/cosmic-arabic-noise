@@ -1,0 +1,2 @@
+[console_scripts]
+cosmic = cosmic_engine.cli:main

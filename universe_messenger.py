@@ -23,9 +23,9 @@ from tv_space_synth import synth_message, SR, HIGH, DEEP, MID
 # ---- Config ----
 LETTERS = ["م", "ر", "س", "ن", "ل", "ف", "ث", "ذ", "ش", "ص",
            "ع", "ح", "ك", "ق"]
-MSG_LEN = 5
+MSG_LEN = 1
 MSG_DUR = 0.55
-RESPONSE_WINDOW = 360.0  # 6 minutes
+RESPONSE_WINDOW = 180.0  # 3 minutes
 CYCLE_PAUSE = 30.0
 
 DIALOGUE_LOG = Path("universe_dialogue.jsonl")
