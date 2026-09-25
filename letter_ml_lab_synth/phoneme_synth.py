@@ -13,9 +13,9 @@ FORMANTS = {
     "p":  (400, 1100, 2200, 0.2, 0.8),
     "t":  (400, 1600, 2600, 0.2, 0.8),
     "k":  (400, 1800, 2400, 0.2, 0.8),
-    "b":  (400, 1100, 2200, 0.8, 0.2),
-    "d":  (400, 1600, 2600, 0.8, 0.2),
-    "g":  (400, 1800, 2400, 0.8, 0.2),
+    "b":  (400, 1100, 2200, 0.95, 0.05),
+    "d":  (400, 1600, 2600, 0.95, 0.05),
+    "g":  (400, 1800, 2400, 0.95, 0.05),
     "s":  (500, 4000, 6500, 0.0, 1.0),
     "sh": (500, 2500, 4000, 0.0, 1.0),
     "f":  (500, 3500, 6000, 0.0, 1.0),
@@ -117,6 +117,12 @@ def synthesize(phoneme, duration=0.35, f0=120.0, jitter=0.0,
     unvoiced = apply_resonators(noise_src)
 
     sig = voicing * voiced + noise_mix * unvoiced * 0.5
+    if phoneme in ("p","t","k","b","d","g"):
+        # plosives: burst decays fast, don't let noise dominate
+        burst = int(0.04 * n)
+        fade = np.ones(n)
+        fade[burst:] = np.linspace(1, 0.2, n - burst)
+        sig *= fade
 
     # nasal zero: notch filter at zero_hz
     if phoneme in NASAL_ZERO_HZ:
