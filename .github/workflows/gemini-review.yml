@@ -1,0 +1,98 @@
+name: Gemini PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Gemini CLI
+        run: |
+          npm install -g @google/gemini-cli
+
+      - name: Get changed files
+        id: changes
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1 || true
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed.txt || \
+            git diff --name-only HEAD~1...HEAD > changed.txt
+          echo "Files changed:"
+          cat changed.txt
+
+      - name: Review with Gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python << 'PY'
+import os, subprocess
+from pathlib import Path
+
+files = Path("changed.txt").read_text().strip().splitlines()
+files = [f for f in files if f.endswith(".py")]
+
+if not files:
+    print("No Python files changed — skipping")
+    raise SystemExit(0)
+
+context = ""
+for f in files[:5]:
+    if Path(f).exists():
+        content = Path(f).read_text()[:3000]
+        context += f"\n### {f}\n```python\n{content}\n```\n"
+
+prompt = f"""Review these code changes for an Arabic phoneme audio engine project.
+
+{context}
+
+Provide a concise review with:
+1. Any bugs or errors
+2. Suggestions for improvement
+3. Whether it looks safe to merge
+
+Be brief."""
+
+env = os.environ.copy()
+result = subprocess.run(
+    ["gemini", "-p", prompt],
+    capture_output=True, text=True, timeout=120, env=env,
+)
+
+review = result.stdout.strip() or "(no output)"
+Path("review.md").write_text(f"# Gemini Review\n\n{review}\n")
+print(review)
+PY
+
+      - name: Post review as comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = "## 🤖 Gemini Review\n\n";
+            try {
+              body += fs.readFileSync('review.md', 'utf8').slice(0, 60000);
+            } catch (e) {
+              body += "(no review file)";
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

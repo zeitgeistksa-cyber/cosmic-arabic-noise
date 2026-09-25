@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cosmic-engine"
+version = "0.3.0"
+description = "Self-evolving cosmic sound generator with chaos + neural adaptation"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "you" }]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "python-osc>=1.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+cosmic = "cosmic_engine.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cosmic_engine*"]

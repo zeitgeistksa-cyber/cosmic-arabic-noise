@@ -1,0 +1,121 @@
+{
+  "telem": [
+    {
+      "frame": 8050,
+      "gen": 162,
+      "entropy": 9.896160125732422,
+      "peak_hz": 0,
+      "coupling": 0.8760234312582887,
+      "cycle_amp": 0.3001728623037742,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8100,
+      "gen": 163,
+      "entropy": 9.971273422241211,
+      "peak_hz": 0,
+      "coupling": 1.408956215028158,
+      "cycle_amp": 0.30013449423666555,
+      "strategies": [
+        "MUTATE_COUPLING",
+        "SHIFT_P_MODE",
+        "REGENERATE_SIREN",
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8150,
+      "gen": 164,
+      "entropy": 9.886350631713867,
+      "peak_hz": 0,
+      "coupling": 1.2322432163748072,
+      "cycle_amp": 0.3001009337544939,
+      "strategies": [
+        "MUTATE_COUPLING",
+        "SHIFT_P_MODE",
+        "REGENERATE_SIREN",
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8200,
+      "gen": 165,
+      "entropy": 10.10162353515625,
+      "peak_hz": 0,
+      "coupling": 1.047406733918586,
+      "cycle_amp": 0.30007218131842184,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8250,
+      "gen": 166,
+      "entropy": 10.097167015075684,
+      "peak_hz": 0,
+      "coupling": 0.890295723830798,
+      "cycle_amp": 0.3000482373235434,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8300,
+      "gen": 167,
+      "entropy": 9.966693878173828,
+      "peak_hz": 0,
+      "coupling": 0.7567513652561783,
+      "cycle_amp": 0.30002910209887873,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8350,
+      "gen": 168,
+      "entropy": 10.176396369934082,
+      "peak_hz": 0,
+      "coupling": 0.6432386604677515,
+      "cycle_amp": 0.3000147759073694,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8400,
+      "gen": 169,
+      "entropy": 9.966163635253906,
+      "peak_hz": 0,
+      "coupling": 0.5467528613975887,
+      "cycle_amp": 0.30000525894587515,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8450,
+      "gen": 170,
+      "entropy": 10.127205848693848,
+      "peak_hz": 0,
+      "coupling": 0.4647399321879504,
+      "cycle_amp": 0.30000055134517073,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    },
+    {
+      "frame": 8500,
+      "gen": 171,
+      "entropy": 10.191722869873047,
+      "peak_hz": 0,
+      "coupling": 0.39502894235975783,
+      "cycle_amp": 0.3000006531699444,
+      "strategies": [
+        "DAMPEN_OSCILLATION"
+      ]
+    }
+  ],
+  "total_frames": 8522
+}

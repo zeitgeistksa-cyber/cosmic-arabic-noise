@@ -1,0 +1,24 @@
+{"event": "ask", "lorenz_mag": 1.0004365197382301, "twin_lock": 0.24587429335257244, "ts": 1790256368.7998319, "time": "2026-09-24T16:26:08.799841"}
+{"event": "applied", "param": "saturation", "old": 1.4, "new": 3.0, "reason": "Amplify all layers to maximum intensity, driving the sound toward a full‑scale destructive symphony.", "ts": 1790256371.808865, "time": "2026-09-24T16:26:11.808879"}
+{"event": "ask", "lorenz_mag": 0.7051050018136301, "twin_lock": 0.5607577751580468, "ts": 1790256491.8115206, "time": "2026-09-24T16:28:11.811531"}
+{"event": "applied", "param": "chaos_rate", "old": 1.0, "new": 2.0, "reason": "increases chaotic variation for a more intense, evolving destruction symphony.", "ts": 1790256493.0203214, "time": "2026-09-24T16:28:13.020333"}
+{"event": "ask", "lorenz_mag": 1.0081109041417557, "twin_lock": 0.7435903053688832, "ts": 1790256530.8800387, "time": "2026-09-24T16:28:50.880045"}
+{"event": "applied", "param": "chaos_rate", "old": 1.0, "new": 1.8, "reason": "boosts chaotic texture for a more intense, evolving destruction symphony.", "ts": 1790256532.364103, "time": "2026-09-24T16:28:52.364113"}
+{"event": "ask", "lorenz_mag": 0.8711250362844768, "twin_lock": 0.5949738706673855, "ts": 1790256652.3656304, "time": "2026-09-24T16:30:52.365637"}
+{"event": "applied", "param": "chaos_rate", "old": 1.8, "new": 2.4, "reason": "Boosts chaotic mixing, amplifying intensity and ensuring constant evolution toward a destructive symphony.", "ts": 1790256653.3717124, "time": "2026-09-24T16:30:53.371726"}
+{"event": "ask", "lorenz_mag": 0.9566092742679057, "twin_lock": 0.45528773843625836, "ts": 1790256773.3736968, "time": "2026-09-24T16:32:53.373707"}
+{"event": "applied", "param": "chaos_rate", "old": 2.4, "new": 2.5, "reason": "Maximizes chaotic evolution, amplifying destructive energy.", "ts": 1790256775.2869446, "time": "2026-09-24T16:32:55.286956"}
+{"event": "ask", "lorenz_mag": 0.9844392262499005, "twin_lock": 0.5055578370710261, "ts": 1790256895.2891014, "time": "2026-09-24T16:34:55.289106"}
+{"event": "applied", "param": "twin_gain", "old": 0.18, "new": 0.4, "reason": "Boosts twin phoneme engine, adding dense harmonic content for a more intense, continuously evolving destruction symphony.", "ts": 1790256896.4439783, "time": "2026-09-24T16:34:56.443985"}
+{"event": "ask", "lorenz_mag": 0.8069456831198785, "twin_lock": 0.5202259440165138, "ts": 1790257016.4470882, "time": "2026-09-24T16:36:56.447100"}
+{"event": "applied", "param": "saturation", "old": 1.3, "new": 2.5, "reason": "boosts dynamic range, making the mix louder and more intense for a destruction symphony.", "ts": 1790257017.6945176, "time": "2026-09-24T16:36:57.694529"}
+{"event": "ask", "lorenz_mag": 0.7742602233382514, "twin_lock": 0.5521621642108904, "ts": 1790257137.6971292, "time": "2026-09-24T16:38:57.697139"}
+{"event": "applied", "param": "real_earthquake", "old": 0.35, "new": 0.6, "reason": "Maxes the deep rumble, boosting continuous intensity for a destruction symphony.", "ts": 1790257139.1198204, "time": "2026-09-24T16:38:59.119834"}
+{"event": "ask", "lorenz_mag": 0.6069915532682705, "twin_lock": 0.6402568870383006, "ts": 1790257259.1230881, "time": "2026-09-24T16:40:59.123099"}
+{"event": "applied", "param": "crack_rate", "old": 0.3, "new": 1.0, "reason": "maximizes crack density for intense, chaotic sonic texture.", "ts": 1790257261.278737, "time": "2026-09-24T16:41:01.278750"}
+{"event": "ask", "lorenz_mag": 0.8051850265451035, "twin_lock": 0.45972640667464326, "ts": 1790257381.2804039, "time": "2026-09-24T16:43:01.280410"}
+{"event": "applied", "param": "seismic_gain", "old": 0.2, "new": 0.4, "reason": "boosts the rumble for more intense, evolving destruction sound.", "ts": 1790257382.8402622, "time": "2026-09-24T16:43:02.840583"}
+{"event": "ask", "lorenz_mag": 0.46525939261651006, "twin_lock": 0.6458274273743005, "ts": 1790257502.8455005, "time": "2026-09-24T16:45:02.846049"}
+{"event": "applied", "param": "real_explosion", "old": 0.15, "new": 0.4, "reason": "Adds more explosive energy, boosting intensity and destruction.", "ts": 1790257504.216496, "time": "2026-09-24T16:45:04.216516"}
+{"event": "ask", "lorenz_mag": 0.8574543521964768, "twin_lock": 0.554191381084085, "ts": 1790257624.2202473, "time": "2026-09-24T16:47:04.220258"}
+{"event": "applied", "param": "real_volcano", "old": 0.3, "new": 0.6, "reason": "boosts volcanic eruption energy for louder, more chaotic destruction.", "ts": 1790257625.6567004, "time": "2026-09-24T16:47:05.656714"}

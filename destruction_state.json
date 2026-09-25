@@ -1,0 +1,35 @@
+{
+  "sample_clock": 90818560,
+  "lorenz": [
+    0.023116471307422677,
+    0.04236443521035653,
+    0.5462947437724627
+  ],
+  "rossler": [
+    0.3543753411210094,
+    0.8899599793059669,
+    0.16299184701180505
+  ],
+  "twin_lock": 0.6152641637427649,
+  "params": {
+    "schumann_gain": 0.12,
+    "seismic_gain": 0.4,
+    "turbulence_gain": 0.15,
+    "volcanic_rate": 0.1,
+    "flood_gain": 0.15,
+    "twin_gain": 0.4,
+    "crack_rate": 1.0,
+    "swell_depth": 0.4,
+    "saturation": 2.5,
+    "chaos_rate": 2.5,
+    "real_earthquake": 0.6,
+    "real_volcano": 0.6,
+    "real_storm": 0.25,
+    "real_wind": 0.2,
+    "real_fire": 0.1,
+    "real_wave": 0.2,
+    "real_tremor": 0.25,
+    "real_explosion": 0.4
+  },
+  "sample_categories": []
+}
